@@ -13,7 +13,6 @@ import sys
 sys.path.append('./util')
 
 from flask import Flask, abort, request,jsonify,render_template
-from flask_script import Manager
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -24,7 +23,7 @@ def index():
     return render_template('index.html')
 
 @app.route('/change')
-def download():
+def change():
     version = request.args.get('version')
     print('version',version)
     return jsonify({"code":200})
