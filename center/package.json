@@ -27,14 +27,10 @@
     "mongodb": "^3.1.1",
     "mongoose": "^5.1.7",
     "request": "^2.87.0",
-    "unzip": "^0.1.11",
     "uuid": "^3.3.2"
   },
   "devDependencies": {
-    "chai": "^4.1.2",
-    "nodemon": "^1.17.5",
-    "supertest": "^3.1.0",
-    "antd": "^3.0.0",
+    "antd": "^3.15.1",
     "autoprefixer": "^7.1.2",
     "babel-core": "^6.25.0",
     "babel-loader": "^7.1.1",
@@ -43,6 +39,7 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "body-parser": "^1.17.2",
+    "chai": "^4.1.2",
     "css-loader": "^0.28.4",
     "extract-text-webpack-plugin": "^3.0.0",
     "file-loader": "^1.1.6",
@@ -50,6 +47,7 @@
     "imports-loader": "^0.7.1",
     "less": "^2.7.2",
     "less-loader": "^4.0.5",
+    "nodemon": "^1.17.5",
     "postcss-loader": "^2.0.6",
     "react": "^16.8.4",
     "react-dom": "^16.2.0",
@@ -59,6 +57,7 @@
     "reqwest": "^2.0.5",
     "script-loader": "^0.7.2",
     "style-loader": "^0.19.0",
+    "supertest": "^3.1.0",
     "url-loader": "^0.6.2",
     "webpack": "^3.10.0"
   }

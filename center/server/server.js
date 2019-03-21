@@ -37,9 +37,8 @@ app.use(async (ctx,next)=>{ctx.response.set('Accept-Ranges', "bytes"); await nex
 app.use(koastatic(path.join(__dirname, './public')));       // 处理静态资源
 app.use(bodyparser());                                      // 使用ctx.body解析中间件
 app.use(consuming);                                         // 计算耗时中间件
-
-let index = new Router();
-const root = loader(path.join(__dirname, './routers/api'), '/rest/');
+console.log('__dirname', __dirname);
+const root = loader(path.join(__dirname, './routers/api'), '/api');
 
 app.use(root.routes()).use(root.allowedMethods());          // 加载路由
 
