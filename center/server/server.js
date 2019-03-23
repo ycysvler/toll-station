@@ -48,7 +48,7 @@ log.info({                                                  // 记录系统启�
     path: '~',
     type: 'start',
     port: config.server.port
-}, 'face v1.0 app services is starting at port ' + config.server.port);
+}, 'toll station v1.0 app services is starting at port ' + config.server.port);
 
 
 module.exports = app;

@@ -1,11 +1,11 @@
-let faceSchemas = require('./faceschemas');
+let dbSchemas = require('./dbschemas');
 const pool = new Map();
 
 let getMongoPool = (dbname)=>{
-    dbname = "cloud_facedb";
+    dbname = "tollstation";
 
     if(!pool.has(dbname)){
-        let schemas = new faceSchemas();
+        let schemas = new dbSchemas();
         pool.set(dbname, schemas);
     }
     let db = pool.get(dbname);
