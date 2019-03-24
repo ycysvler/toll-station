@@ -1,7 +1,7 @@
 .idea/
 node_modules/
-public/dist/bundle.js
-public/dist/bundle.css
-public/dist/index.html
-public/dist/
+public/bundle.js
+public/bundle.css
+public/index.html
+public/
 logs/
