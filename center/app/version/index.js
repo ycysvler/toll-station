@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import {HashRouter as Router,Route,Link,Switch,Redirect} from 'react-router-dom';
-import { Layout,Menu, Icon } from 'antd';
+import { Layout,Menu, Icon ,Table} from 'antd';
 import {Actions, Store} from '../reflux';
 
 const { Header, Footer, Sider, Content } = Layout;
@@ -14,8 +14,8 @@ export default class Version extends React.Component {
         super(props);
 
         this.unsubscribe = Store.listen(this.onStatusChange.bind(this));
-
-        Actions.test();
+        this.state = {list:[]};
+        Actions.list();
     }
 
     componentWillUnmount() {
@@ -23,28 +23,38 @@ export default class Version extends React.Component {
     }
 
     componentDidMount() {
-        if (window.screen.width > 1920) {
-            document.body.style.zoom = window.screen.width / 1920;
-        }
+
     }
 
     onStatusChange(action, data){
-
+        switch(action){
+            case "list":
+                this.setState({list:data.data});
+                console.log('data', data);
+                break;
+        }
     }
+
+    columns = [{
+        title: '模型',
+        dataIndex: 'model',
+        key: 'model',
+    }, {
+        title: '版本',
+        dataIndex: 'version',
+        key: 'version',
+    }, {
+        title: '描述',
+        dataIndex: 'describe',
+        key: 'describe',
+    }];
 
     render() {
         return (
             <Layout>
-                <Sider width={250} style={{"background":"#fff"}}>
-                    <Menu>
 
-                        <Menu.Item key="alipay9">
-                            <Link to="/main/face/faces"> <Icon type="laptop" />版本管理</Link>
-                        </Menu.Item>
-                    </Menu>
-                </Sider>
-                <Layout style={{borderLeft:'solid 1px #e8e8e8'}}>
-
+                <Layout style={{borderLeft:'solid 1px #e8e8e8',padding:16}}>
+                    <Table rowKey="_id" dataSource={this.state.list} columns={this.columns} />
                 </Layout>
             </Layout>
         );

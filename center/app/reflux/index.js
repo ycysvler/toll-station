@@ -2,7 +2,7 @@ import Reflux from 'reflux';
 import Config from 'config';
 
 const Actions = Reflux.createActions([
-        'auth',
+        'list',
         'viewer',
         'locList',
         'portalUserList',
@@ -19,6 +19,27 @@ const Store = Reflux.createStore({
     },
 
     listenables: [Actions],
+
+    onList(){
+        let self = this;
+        let url = Config.base + '/version';
+        fetch(url, {
+            method: "get",
+            credentials: "include"
+        })
+            .then(response => {
+                response.json().then(function(data){
+                    self.trigger('list',data);
+                });
+            })
+            .catch(error => {
+                if (error.response) {
+                    cb(null, error.message, error.response.status);
+                } else {
+                    cb(null, error.message, 500);
+                }
+            });
+    },
 
     onTest(cb){
         console.log('Config', Config);
