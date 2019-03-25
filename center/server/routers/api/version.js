@@ -6,6 +6,7 @@ const path = require('path');
 const moment = require('moment');
 const request = require('request');
 const tools = require('../../utils/tools');
+const uploadFile = require('../../utils/upload');
 const Config = require('../../config/config');
 const VersionLogic = require('../../db/mongo/dao/version');
 const logic = new VersionLogic();
@@ -33,6 +34,27 @@ module.exports = function (router) {
                 {error_code: error_code, data: data};
         }
     });
+
+    /*
+    * 添加分组
+    * { "group_id":"22", "desc":"这是一个测试用的分组" }
+    * */
+    router.post('/upload', async(ctx) => {
+        if (true) {
+            let serverFilePath = path.join(__dirname, '../../public');
+
+            // 上传文件事件
+            let f = await uploadFile(ctx, {
+                path: serverFilePath
+            });
+
+            console.log('f',f);
+            // 文件名
+            let filename = path.basename(f.path);
+            ctx.body = {code: 200, data: filename};
+        }
+    });
+
 
     // 获取分组列表
     router.get('/version', async(ctx) => {
