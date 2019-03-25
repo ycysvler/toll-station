@@ -97,7 +97,7 @@ class VersionInfo extends React.Component {
                             onSubmit={this.handleSubmit} hideRequiredMark style={{marginTop: 8}}>
                             <FormItem {...formItemLayout} label="模型：">
                                 {getFieldDecorator('model', {
-                                    initialValue: "v",
+                                    initialValue: "vehicle",
                                     rules: [
                                         {
                                             required: true,
@@ -105,9 +105,9 @@ class VersionInfo extends React.Component {
                                         },
                                     ],
                                 })(<Select >
-                                    <Option key={"v"}>car model</Option>
-                                    <Option key={"m"}>bag model</Option>
-                                    <Option key={"t"}>line model</Option>
+                                    <Option key={"vehicle"}>车型</Option>
+                                    <Option key={"wheelbase"}>轴距</Option>
+                                    <Option key={"quality"}>质量</Option>
                                 </Select>)}
                             </FormItem>
 
