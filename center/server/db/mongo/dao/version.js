@@ -33,8 +33,21 @@ module.exports = class GroupLogic {
 
     remove(data) {
         return new Promise((resolve, reject) => {
-            let doc = getMongoPool().Group;
-            doc.deleteMany({group_id: data.group_id}, function (err, Item) {
+            let doc = getMongoPool().Version;
+            doc.deleteMany({_id: data._id}, function (err, Item) {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(Item);
+                }
+            });
+        });
+    }
+
+    status(data){
+        return new Promise((resolve, reject) => {
+            let doc = getMongoPool().Version;
+            doc.update({_id: data._id},{status:data.status}, function (err, Item) {
                 if (err) {
                     reject(err);
                 } else {

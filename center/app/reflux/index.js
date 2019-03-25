@@ -3,7 +3,9 @@ import Config from 'config';
 
 const Actions = Reflux.createActions([
         'list',
-        'add',
+        'create',
+        'remove',
+        'status',
         'upload'
     ]
 );
@@ -16,7 +18,60 @@ const Store = Reflux.createStore({
 
     listenables: [Actions],
 
-    onAdd(data){
+    onStatus(data){
+        let self = this;
+        let url = Config.base + '/version';
+
+        fetch(url, {
+            headers:{
+                "Content-Type":"application/json",
+            },
+            method: "put",
+            body:JSON.stringify(data),
+            credentials: "include"
+        })
+            .then(response => {
+                response.json().then(function(data){
+                    self.trigger('status',data);
+                });
+            })
+            .catch(error => {
+                if (error.response) {
+                    cb(null, error.message, error.response.status);
+                } else {
+                    cb(null, error.message, 500);
+                }
+            });
+    },
+
+
+    onRemove(data){
+        let self = this;
+        let url = Config.base + '/version';
+
+        fetch(url, {
+            headers:{
+                "Content-Type":"application/json",
+            },
+            method: "delete",
+            body:JSON.stringify(data),
+            credentials: "include"
+        })
+            .then(response => {
+                response.json().then(function(data){
+                    self.trigger('remove',data);
+                });
+            })
+            .catch(error => {
+                if (error.response) {
+                    cb(null, error.message, error.response.status);
+                } else {
+                    cb(null, error.message, 500);
+                }
+            });
+    },
+
+    onCreate(data){
         let self = this;
         let url = Config.base + '/version';
 
@@ -30,7 +85,7 @@ const Store = Reflux.createStore({
         })
             .then(response => {
                 response.json().then(function(data){
-                    self.trigger('add',data);
+                    self.trigger('create',data);
                 });
             })
             .catch(error => {

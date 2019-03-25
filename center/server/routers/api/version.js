@@ -76,14 +76,32 @@ module.exports = function (router) {
     * 删除分组
     * { "group_id":"1" }
     * */
-    router.delete('/faceset/group/delete', async(ctx) => {
-        let ok = tools.required(ctx, ["group_id"]);
+    router.delete('/version', async(ctx) => {
+        let ok = tools.required(ctx, ["_id"]);
         if (ok) {
             let error_code = 0;
             let data = null;
             let error_msg = null;
 
             data = await logic.remove(ctx.request.body).catch(function (err) {
+                error_code = err.code;
+                error_msg = err.errmsg;
+            });
+
+            ctx.body = error_code ?
+                {error_code: error_code, error_msg} :
+                {error_code: error_code};
+        }
+    });
+
+    router.put('/version', async(ctx)=>{
+        let ok = tools.required(ctx, ["_id","status"]);
+        if (ok) {
+            let error_code = 0;
+            let data = null;
+            let error_msg = null;
+
+            data = await logic.status(ctx.request.body).catch(function (err) {
                 error_code = err.code;
                 error_msg = err.errmsg;
             });

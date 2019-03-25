@@ -32,7 +32,7 @@ class VersionInfo extends React.Component {
             case "upload":
                 this.setState({"fileName": data.data, "uploading":false});
                 break;
-            case "add":
+            case "create":
                 this.setState({"visible": false, "uploading":false});
                 this.props.refresh();
                 break;
@@ -45,7 +45,7 @@ class VersionInfo extends React.Component {
             if (!err) {
                 console.log('Received values of form: ', values);
                 values.filename = this.state.fileName;
-                Actions.add(values);
+                Actions.create(values);
             }
         });
     };
@@ -115,7 +115,7 @@ class VersionInfo extends React.Component {
                                 {getFieldDecorator('file', {
                                     rules: [
                                         {
-                                            required: false,
+                                            required: true,
                                             message: "请上传模型文件",
                                         },
                                     ],
