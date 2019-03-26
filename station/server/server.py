@@ -14,6 +14,7 @@ import sys
 import requests
 import json
 import subprocess
+from config import center_base
 
 sys.path.append('./util')
 
@@ -52,12 +53,12 @@ def change():
 @app.route('/api/download')
 def download():
     filename = request.args.get('filename')
-    download_big_file_with_wget('http://localhost:4001/models/' + filename,'./static/models/' + filename)
+    download_big_file_with_wget(center_base + '/models/' + filename,'./static/models/' + filename)
     return jsonify({"code":200, "filename":filename})
 
 @app.route('/api/version')
 def models():
-    result = requests.get('http://localhost:4001/api/version').json()
+    result = requests.get(center_base + '/api/version').json()
     config = load_config()
 
 
@@ -70,7 +71,7 @@ def models():
         # check local is the version
         if item['model'] in config:
             if config[item['model']] == item['version'] :
-                item['local'] = True
+                item['current'] = True
 
     print('result', result)
 
