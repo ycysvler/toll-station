@@ -99,5 +99,7 @@ def versions():
 
 
 if __name__ == "__main__":
+    code = subprocess.call(['pm2','list'])
+    print('code',code)
     app.run(host='0.0.0.0',port=8000)
 
