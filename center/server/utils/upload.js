@@ -42,7 +42,7 @@ function uploadFile(ctx, options) {
     let busboy = new Busboy({headers: req.headers});
 
     // 获取类型
-    let fileType = options.fileType || 'common';
+    let fileType = options.fileType || 'models';
     let filePath = path.join(options.path, fileType);
     let mkdirResult = mkdirsSync(filePath);
 
@@ -55,7 +55,7 @@ function uploadFile(ctx, options) {
 
         // 解析请求文件事件
         busboy.on('file', function (fieldname, file, filename, encoding, mimetype) {
-            let fileName = Math.random().toString(16).substr(2) + '.' + getSuffixName(filename);
+            let fileName = options.fileName ? options.fileName: Math.random().toString(16).substr(2) + '.' + getSuffixName(filename);
             let _uploadFilePath = path.join(filePath, fileName);
             let saveTo = path.join(_uploadFilePath);
 

@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
-    <title> </title>
-    <link href="bundle.css?3620f23883f5b1391d7d" rel="stylesheet">
-    
+    <title><%= htmlWebpackPlugin.options.title %></title><% for (var css in htmlWebpackPlugin.files.css) { %>
+    <link href="<%= htmlWebpackPlugin.files.css[css] %>" rel="stylesheet">
+    <% } %>
 
 
     <script type="text/javascript" charset="UTF-8">
@@ -22,8 +22,8 @@
 <div id="root" style="display:flex; position: absolute;left:0;top:0;right:0;bottom:0;">
 
 </div>
-
-<script type="text/javascript" src="bundle.js?3620f23883f5b1391d7d"></script>
-
+<% for (var chunk in htmlWebpackPlugin.files.chunks) { %>
+<script type="text/javascript" src="<%= htmlWebpackPlugin.files.chunks[chunk].entry %>"></script>
+<% } %>
 </body>
 </html>

@@ -15,7 +15,8 @@ module.exports = class Schemas {
             model: String,                                                      // 模型名称
             version: String,                                                    // 版本信息
             describe: String,                                                   // 描述信息
-            status: Number,                                                     // 状态 0：新建、1：上线、-1：下线
+            filename:String,                                                    // file name
+            status: {type:Number, default:0},                                   // 状态 0：新建、1：上线、-1：下线
             updatetime: Date                                                    // 更新时间
         });
         this.versionSchema.index({model: 1, version: 1});

@@ -3,7 +3,8 @@
  */
 import React from 'react';
 import {HashRouter as Router,Route,Link,Switch,Redirect} from 'react-router-dom';
-import { Layout,Menu, Icon ,Table} from 'antd';
+import { Layout,Menu,Divider, Icon ,Button,Table} from 'antd';
+import VersionInfo from './info';
 import {Actions, Store} from '../reflux';
 
 const { Header, Footer, Sider, Content } = Layout;
@@ -15,7 +16,7 @@ export default class Version extends React.Component {
 
         this.unsubscribe = Store.listen(this.onStatusChange.bind(this));
         this.state = {list:[]};
-        Actions.list();
+
     }
 
     componentWillUnmount() {
@@ -23,17 +24,25 @@ export default class Version extends React.Component {
     }
 
     componentDidMount() {
-
+        this.refresh();
     }
 
     onStatusChange(action, data){
         switch(action){
             case "list":
                 this.setState({list:data.data});
-                console.log('data', data);
+                break;
+            case "remove":
+            case "status":
+                this.refresh();
                 break;
         }
     }
+
+    refresh=()=>{
+        this.setState({modal:false});
+        Actions.list();
+    };
 
     columns = [{
         title: '模型',
@@ -44,9 +53,41 @@ export default class Version extends React.Component {
         dataIndex: 'version',
         key: 'version',
     }, {
+        title: 'file',
+        dataIndex: 'filename',
+        key: 'filename',
+    },{
+        title: 'status',
+        dataIndex: 'status',
+        key: 'status',
+    },{
         title: '描述',
         dataIndex: 'describe',
         key: 'describe',
+    },{
+        title: 'action',
+        key: 'action',
+        render:(text,record)=>(
+            <span>
+                <a href={"javascript:;"}
+                   onClick={()=>{
+                       Actions.status({_id:record._id, status:1})
+                   }}
+                >up</a>
+                <Divider type={"vertical"} />
+                <a href={"javascript:;"}
+                   onClick={()=>{
+                       Actions.status({_id:record._id, status:-1})
+                   }}
+                >down</a>
+                <Divider type={"vertical"} />
+                <a href={"javascript:;"}
+                   onClick={()=>{
+                       Actions.remove({_id:record._id})
+                   }}
+                >delete</a>
+            </span>
+        )
     }];
 
     render() {
@@ -54,7 +95,13 @@ export default class Version extends React.Component {
             <Layout>
 
                 <Layout style={{borderLeft:'solid 1px #e8e8e8',padding:16}}>
-                    <Table rowKey="_id" dataSource={this.state.list} columns={this.columns} />
+                    <div style={{paddingBottom:16}}><Button icon="plus" type="primary"
+                    onClick={()=>{this.setState({"modal":true})}}
+                    >Add</Button></div>
+
+                    <Table bordered rowKey="_id" dataSource={this.state.list} columns={this.columns} />
+
+                    <VersionInfo refresh={this.refresh} showModal={this.state.modal} />
                 </Layout>
             </Layout>
         );
