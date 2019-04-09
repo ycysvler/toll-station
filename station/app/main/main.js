@@ -5,6 +5,7 @@ import React from 'react';
 import {HashRouter as Router, Route, Link, Switch, Redirect} from 'react-router-dom';
 import moment from 'moment';
 import Version from '../version';
+import Test from '../test';
 import {Layout, Badge, Dropdown, Button, Divider, notification, Menu, message, Modal, Avatar, Row, Col} from 'antd';
 import {NotFound} from '../notfound';
 
@@ -41,6 +42,10 @@ export class Main extends React.Component {
                         theme="dark"
                         mode="horizontal"
                     >
+                        <Menu.Item key="test">
+                            <Link to='/main/test'>test</Link>
+
+                        </Menu.Item>
                         <Menu.Item key="app">
                             <Link to='/main/version'>版本管理</Link>
 
@@ -82,6 +87,7 @@ export class Main extends React.Component {
                     <Router>
                         <Switch>
                             <Route path="/main/version" component={Version}/>
+                            <Route path="/main/test" component={Test}/>
                             <Route component={NotFound}/>
                         </Switch>
                     </Router>

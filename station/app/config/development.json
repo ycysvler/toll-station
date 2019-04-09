@@ -1,5 +1,8 @@
 {
   "name":"visual-control-platform-dev",
   "titleSuffix": " - 管理平台",
-  "base":"http://localhost:8000/api"
+  "base":"http://localhost:8000",
+  "blur":"http://192.168.31.145:4002",
+  "cartwheel":"http://192.168.31.145:4001",
+  "vehicle":"http://192.168.31.145:4000"
 }

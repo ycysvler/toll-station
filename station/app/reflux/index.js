@@ -18,7 +18,7 @@ const Store = Reflux.createStore({
 
     onOnline(model, version, filename){
         let self = this;
-        let url =`${Config.base}/online?filename=${filename}&model=${model}&version=${version}`;
+        let url =`${Config.base}/api/online?filename=${filename}&model=${model}&version=${version}`;
         fetch(url, {
             method: "get",
 
@@ -40,7 +40,7 @@ const Store = Reflux.createStore({
 
     onDownload(filename){
         let self = this;
-        let url = Config.base + '/download?filename=' + filename;
+        let url = Config.base + '/api/download?filename=' + filename;
         fetch(url, {
             method: "get",
 
@@ -62,7 +62,7 @@ const Store = Reflux.createStore({
 
     onList(){
         let self = this;
-        let url = Config.base + '/version';
+        let url = Config.base + '/api/version';
         fetch(url, {
             method: "get",
 
