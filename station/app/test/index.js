@@ -3,18 +3,19 @@
  */
 import React from 'react';
 import {HashRouter as Router, Route, Link, Switch, Redirect} from 'react-router-dom';
-import {Layout, Menu, Divider, Icon, Button,Tabs, Table} from 'antd';
+import {Layout, Menu, Divider, Icon, Button,Tabs, Card} from 'antd';
 import {TestActions, TestStore} from '../reflux/test';
 const TabPane = Tabs.TabPane;
 const {Header, Footer, Sider, Content} = Layout;
 const SubMenu = Menu.SubMenu;
+import './index.css';
 
 export default class Test extends React.Component {
     constructor(props) {
         super(props);
 
         this.unsubscribe = TestStore.listen(this.onStatusChange.bind(this));
-        this.state = {list: []};
+        this.state = {list: [], blur:"", vehicle:"", cartwheel:""};
 
     }
 
@@ -30,10 +31,16 @@ export default class Test extends React.Component {
         switch (action) {
             case "blur":
                 console.log('blur', data);
-                this.setState({list: data.data});
+                this.setState({'blur': JSON.stringify(data)});
                 break;
-            case "download":
-            case "online":
+            case "vehicle":
+                console.log('vehicle', data);
+                this.setState({'vehicle': JSON.stringify(data)});
+                break;
+            case "cartwheel":
+                console.log('cartwheel', data);
+                this.setState({'cartwheel': JSON.stringify(data)});
+                break;
             case "remove":
             case "status":
                 break;
@@ -41,61 +48,6 @@ export default class Test extends React.Component {
     }
 
 
-    columns = [{
-        title: '模型',
-        dataIndex: 'model',
-        key: 'model',
-    }, {
-        title: '版本',
-        dataIndex: 'version',
-        key: 'version',
-    }, {
-        title: '文件',
-        dataIndex: 'filename',
-        key: 'filename',
-    }, {
-        title: '已下载',
-        dataIndex: 'exist',
-        key: 'exist',
-        render: (text, record) => {
-            return <span>{text ? "Y" : "N"}</span>
-        }
-    },
-        {
-            title: '正在用',
-            dataIndex: 'current',
-            key: 'current', render: (text, record) => {
-                return <span>{text ? "Y" : "N"}</span>
-            }
-        }, {
-            title: '状态',
-            dataIndex: 'status',
-            key: 'status',
-        }, {
-            title: '描述',
-            dataIndex: 'describe',
-            key: 'describe',
-        }, {
-            title: '操作',
-            key: 'action',
-            render: (text, record) => {
-                return <span>
-                {record.current ? null : <a href={"javascript:;"}
-                                     onClick={() => {
-                                         Actions.online(
-                                             record.model, record.version, record.filename
-                                         )
-                                     }}
-                >启动</a>}
-                    {record.current ? null : <Divider type="vertical"/>}
-                    {record.exist ? null:<a href="javascript:;"
-                       onClick={() => {
-                           Actions.download(record.filename)
-                       }}
-                    >下载</a>}
-            </span>
-            }
-        }];
 
     callback(key) {
         console.log(key);
@@ -110,16 +62,44 @@ export default class Test extends React.Component {
     onCartwheelUpload(e) {
         // 选择的文件
         let file = e.currentTarget.files[0];
-        TestActions.blur(file);
+        TestActions.cartwheel(file);
         this.setState({uploading: true});
     }
     onVehicleUpload(e) {
         // 选择的文件
         let file = e.currentTarget.files[0];
-        TestActions.blur(file);
+        TestActions.vehicle(file);
         this.setState({uploading: true});
     }
+
+    syntaxHighlight(json) {
+             if (typeof json != 'string') {
+                     json = JSON.stringify(json, undefined, 2);
+                 }
+             json = json.replace(/&/g, '&').replace(/</g, '<').replace(/>/g, '>');
+             let result = json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g,
+                     function(match) {
+                         var cls = 'number';
+                         if (/^"/.test(match)) {
+                                 if (/:$/.test(match)) {
+                                         cls = 'key';
+                                     } else {
+                                         cls = 'string';
+                                     }
+                             } else if (/true|false/.test(match)) {
+                                 cls = 'boolean';
+                             } else if (/null/.test(match)) {
+                                 cls = 'null';
+                             }
+                         return '<span class="' + cls + '">' + match + '</span>';
+                     }
+             );
+             return result;
+         }
+
+
     render() {
+        console.log(this.syntaxHighlight(this.state.vehicle));
         return (
             <Layout>
 
@@ -136,6 +116,13 @@ export default class Test extends React.Component {
                                        onChange={(e) => {
                                            this.onBlurUpload(e);
                                        }}/>
+
+                                <div>
+                                    <br/>
+                                    <Card title={"result"}>
+                                        <pre dangerouslySetInnerHTML={{__html:this.syntaxHighlight(this.state.blur)}}></pre>
+                                    </Card>
+                                </div>
                             </div>
 
                         </TabPane>
@@ -149,6 +136,14 @@ export default class Test extends React.Component {
                                        onChange={(e) => {
                                            this.onCartwheelUpload(e);
                                        }}/>
+
+                                <div>
+                                    <br/>
+                                    <Card title={"result"}>
+
+                                        <pre dangerouslySetInnerHTML={{__html:this.syntaxHighlight(this.state.cartwheel)}}></pre>
+                                    </Card>
+                                </div>
                             </div>
 
                         </TabPane>
@@ -161,6 +156,12 @@ export default class Test extends React.Component {
                                    onChange={(e) => {
                                        this.onVehicleUpload(e);
                                    }}/>
+                            <div>
+                                <br/>
+                                <Card title={"result"}>
+                                    <pre dangerouslySetInnerHTML={{__html:this.syntaxHighlight(this.state.vehicle)}}></pre>
+                                </Card>
+                            </div>
                         </div></TabPane>
                     </Tabs>
 
