@@ -1,6 +1,12 @@
-pre {outline: 0px solid #ccc; padding: 5px; margin: 5px; }
+pre {outline: 0px solid #ccc; padding: 5px; margin: 5px;  }
      .string { color: green; }        /*字符串的样式*/
      .number { color: darkorange; }    /*数字的样式*/
      .boolean { color: blue; }        /*布尔型数据的样式*/
      .null { color: magenta; }        /*null值的样式*/
      .key { color: red; }            /*key值的样式*/
+
+.ant-card-body{
+     overflow: auto;
+     max-height: 600px;
+     padding:4px !important;
+}

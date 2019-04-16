@@ -18,7 +18,9 @@ const TestStore = Reflux.createStore({
 
     onBlur(file){
         let self = this;
-        let url = Config.blur + '/upload';
+        // let url = Config.blur + '/upload';
+
+        let url = `http://${document.domain}:4002`+ '/upload';
 
 
         let formFile = new FormData();
@@ -44,8 +46,8 @@ const TestStore = Reflux.createStore({
 
     onCartwheel(file){
         let self = this;
-        let url = Config.cartwheel + '/upload';
-
+        // let url = Config.cartwheel + '/upload';
+        let url = `http://${document.domain}:4001`+ '/upload';
 
         let formFile = new FormData();
         formFile.append("image", file, file.name);
@@ -69,8 +71,8 @@ const TestStore = Reflux.createStore({
     },
     onVehicle(file){
         let self = this;
-        let url = Config.vehicle + '/upload';
-
+        // let url = Config.vehicle + '/upload';
+        let url = `http://${document.domain}:4000`+ '/upload';
 
         let formFile = new FormData();
         formFile.append("image", file, file.name);

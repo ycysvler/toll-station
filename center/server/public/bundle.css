@@ -3048,10 +3048,6 @@ tr.ant-table-expanded-row td > .ant-table-wrapper {
 .ant-empty-normal .ant-empty-image {
   height: 40px;
 }
-.ant-select-dropdown--empty .ant-select-dropdown-menu-item {
-  padding-right: 0;
-  padding-left: 0;
-}
 /* stylelint-disable at-rule-empty-line-before,at-rule-name-space-after,at-rule-no-unknown */
 /* stylelint-disable no-duplicate-selectors */
 /* stylelint-disable */
@@ -6105,6 +6101,9 @@ textarea.ant-pagination-options-quick-jumper input {
   display: inline-block;
   color: #1890ff;
 }
+.ant-select-dropdown--empty.ant-select-dropdown--multiple .ant-select-dropdown-menu-item {
+  padding-right: 12px;
+}
 .ant-select-dropdown-container-open .ant-select-dropdown,
 .ant-select-dropdown-open .ant-select-dropdown {
   display: block;
@@ -6391,23 +6390,22 @@ textarea.ant-pagination-options-quick-jumper input {
   visibility: hidden;
 }
 .ant-tabs.ant-tabs-card .ant-tabs-card-bar .ant-tabs-tab {
-  height: 39px;
+  height: 40px;
   margin: 0;
   margin-right: 2px;
   padding: 0 16px;
   line-height: 38px;
   background: #fafafa;
   border: 1px solid #e8e8e8;
-  border-bottom: 0;
   border-radius: 4px 4px 0 0;
   transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 .ant-tabs.ant-tabs-card .ant-tabs-card-bar .ant-tabs-tab-active {
   height: 40px;
-  padding-bottom: 1px;
   color: #1890ff;
   background: #fff;
   border-color: #e8e8e8;
+  border-bottom: 1px solid #fff;
 }
 .ant-tabs.ant-tabs-card .ant-tabs-card-bar .ant-tabs-tab-inactive {
   padding: 0;
@@ -10800,6 +10798,7 @@ input[type='checkbox'].disabled {
   min-height: 22px;
   margin-top: -2px;
   color: rgba(0, 0, 0, 0.45);
+  font-size: 14px;
   line-height: 1.5;
   transition: color 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
 }

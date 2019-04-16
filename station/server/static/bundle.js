@@ -35576,7 +35576,7 @@ var _reactRouterDom = __webpack_require__(51);
 
 var _main = __webpack_require__(381);
 
-__webpack_require__(750);
+__webpack_require__(751);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -61857,14 +61857,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Main = undefined;
 
-var _divider = __webpack_require__(133);
-
-var _divider2 = _interopRequireDefault(_divider);
-
-var _avatar = __webpack_require__(389);
-
-var _avatar2 = _interopRequireDefault(_avatar);
-
 var _menu = __webpack_require__(67);
 
 var _menu2 = _interopRequireDefault(_menu);
@@ -61874,10 +61866,6 @@ var _layout = __webpack_require__(69);
 var _layout2 = _interopRequireDefault(_layout);
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-__webpack_require__(164);
-
-__webpack_require__(485);
 
 __webpack_require__(103);
 
@@ -61901,9 +61889,9 @@ var _test = __webpack_require__(746);
 
 var _test2 = _interopRequireDefault(_test);
 
-var _notfound = __webpack_require__(748);
+var _notfound = __webpack_require__(749);
 
-__webpack_require__(749);
+__webpack_require__(750);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -61954,16 +61942,15 @@ var Main = exports.Main = function (_React$Component) {
                     _react2.default.createElement(
                         'div',
                         { className: 'logo' },
-                        _react2.default.createElement(_avatar2.default, { style: { marginRight: 8 },
-                            src: '' }),
-                        '\u7BA1\u7406\u5E73\u53F0'
+                        '\u56FE\u50CF\u8BC6\u522B'
                     ),
                     _react2.default.createElement(
                         _menu2.default,
                         {
                             style: { flexGrow: 1 },
                             theme: 'dark',
-                            mode: 'horizontal'
+                            mode: 'horizontal',
+                            selectedKeys: ["test"]
                         },
                         _react2.default.createElement(
                             _menu2.default.Item,
@@ -61971,51 +61958,7 @@ var Main = exports.Main = function (_React$Component) {
                             _react2.default.createElement(
                                 _reactRouterDom.Link,
                                 { to: '/main/test' },
-                                'test'
-                            )
-                        ),
-                        _react2.default.createElement(
-                            _menu2.default.Item,
-                            { key: 'app' },
-                            _react2.default.createElement(
-                                _reactRouterDom.Link,
-                                { to: '/main/version' },
-                                '\u7248\u672C\u7BA1\u7406'
-                            )
-                        ),
-                        _react2.default.createElement(
-                            _menu2.default.Item,
-                            { key: '4' },
-                            _react2.default.createElement(
-                                _reactRouterDom.Link,
-                                { to: '/main/system' },
-                                '\u7CFB\u7EDF\u8BBE\u7F6E'
-                            )
-                        )
-                    ),
-                    _react2.default.createElement(
-                        'div',
-                        { className: 'user' },
-                        _react2.default.createElement(
-                            'div',
-                            null,
-                            _react2.default.createElement(_avatar2.default, { style: { marginRight: 8 },
-                                src: "" })
-                        ),
-                        _react2.default.createElement(
-                            'div',
-                            { style: { marginRight: 16 } },
-                            sessionStorage.getItem('user') ? JSON.parse(sessionStorage.getItem('user')).employeeDto.name : '袁洋'
-                        ),
-                        _react2.default.createElement(
-                            'div',
-                            { className: 'bar' },
-                            _react2.default.createElement(_divider2.default, { type: 'vertical' }),
-                            _react2.default.createElement(
-                                'a',
-                                { href: 'javascript:open(\'/vsb/\', \'_self\').close();',
-                                    style: { color: "#999", cursor: 'pointer' } },
-                                '\u9000\u51FA'
+                                '\u63A5\u53E3\u6D4B\u8BD5'
                             )
                         )
                     )
@@ -62506,229 +62449,7 @@ var _default = _en_US["default"];
 exports["default"] = _default;
 
 /***/ }),
-/* 389 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports["default"] = void 0;
-
-var React = _interopRequireWildcard(__webpack_require__(0));
-
-var _icon = _interopRequireDefault(__webpack_require__(13));
-
-var _classnames = _interopRequireDefault(__webpack_require__(3));
-
-var _configProvider = __webpack_require__(8);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj["default"] = obj; return newObj; } }
-
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-var __rest = void 0 && (void 0).__rest || function (s, e) {
-  var t = {};
-
-  for (var p in s) {
-    if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
-  }
-
-  if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-    if (e.indexOf(p[i]) < 0) t[p[i]] = s[p[i]];
-  }
-  return t;
-};
-
-var Avatar =
-/*#__PURE__*/
-function (_React$Component) {
-  _inherits(Avatar, _React$Component);
-
-  function Avatar() {
-    var _this;
-
-    _classCallCheck(this, Avatar);
-
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(Avatar).apply(this, arguments));
-    _this.state = {
-      scale: 1,
-      isImgExist: true
-    };
-
-    _this.setScale = function () {
-      if (!_this.avatarChildren || !_this.avatarNode) {
-        return;
-      }
-
-      var childrenWidth = _this.avatarChildren.offsetWidth; // offsetWidth avoid affecting be transform scale
-
-      var nodeWidth = _this.avatarNode.offsetWidth; // denominator is 0 is no meaning
-
-      if (childrenWidth === 0 || nodeWidth === 0 || _this.lastChildrenWidth === childrenWidth && _this.lastNodeWidth === nodeWidth) {
-        return;
-      }
-
-      _this.lastChildrenWidth = childrenWidth;
-      _this.lastNodeWidth = nodeWidth; // add 4px gap for each side to get better performance
-
-      _this.setState({
-        scale: nodeWidth - 8 < childrenWidth ? (nodeWidth - 8) / childrenWidth : 1
-      });
-    };
-
-    _this.handleImgLoadError = function () {
-      var onError = _this.props.onError;
-      var errorFlag = onError ? onError() : undefined;
-
-      if (errorFlag !== false) {
-        _this.setState({
-          isImgExist: false
-        });
-      }
-    };
-
-    _this.renderAvatar = function (_ref) {
-      var _classNames, _classNames2;
-
-      var getPrefixCls = _ref.getPrefixCls;
-
-      var _a = _this.props,
-          customizePrefixCls = _a.prefixCls,
-          shape = _a.shape,
-          size = _a.size,
-          src = _a.src,
-          srcSet = _a.srcSet,
-          icon = _a.icon,
-          className = _a.className,
-          alt = _a.alt,
-          others = __rest(_a, ["prefixCls", "shape", "size", "src", "srcSet", "icon", "className", "alt"]);
-
-      var _this$state = _this.state,
-          isImgExist = _this$state.isImgExist,
-          scale = _this$state.scale;
-      var prefixCls = getPrefixCls('avatar', customizePrefixCls);
-      var sizeCls = (0, _classnames["default"])((_classNames = {}, _defineProperty(_classNames, "".concat(prefixCls, "-lg"), size === 'large'), _defineProperty(_classNames, "".concat(prefixCls, "-sm"), size === 'small'), _classNames));
-      var classString = (0, _classnames["default"])(prefixCls, className, sizeCls, (_classNames2 = {}, _defineProperty(_classNames2, "".concat(prefixCls, "-").concat(shape), shape), _defineProperty(_classNames2, "".concat(prefixCls, "-image"), src && isImgExist), _defineProperty(_classNames2, "".concat(prefixCls, "-icon"), icon), _classNames2));
-      var sizeStyle = typeof size === 'number' ? {
-        width: size,
-        height: size,
-        lineHeight: "".concat(size, "px"),
-        fontSize: icon ? size / 2 : 18
-      } : {};
-      var children = _this.props.children;
-
-      if (src && isImgExist) {
-        children = React.createElement("img", {
-          src: src,
-          srcSet: srcSet,
-          onError: _this.handleImgLoadError,
-          alt: alt
-        });
-      } else if (icon) {
-        children = React.createElement(_icon["default"], {
-          type: icon
-        });
-      } else {
-        var childrenNode = _this.avatarChildren;
-
-        if (childrenNode || scale !== 1) {
-          var transformString = "scale(".concat(scale, ") translateX(-50%)");
-          var childrenStyle = {
-            msTransform: transformString,
-            WebkitTransform: transformString,
-            transform: transformString
-          };
-          var sizeChildrenStyle = typeof size === 'number' ? {
-            lineHeight: "".concat(size, "px")
-          } : {};
-          children = React.createElement("span", {
-            className: "".concat(prefixCls, "-string"),
-            ref: function ref(node) {
-              return _this.avatarChildren = node;
-            },
-            style: _extends({}, sizeChildrenStyle, childrenStyle)
-          }, children);
-        } else {
-          children = React.createElement("span", {
-            className: "".concat(prefixCls, "-string"),
-            ref: function ref(node) {
-              return _this.avatarChildren = node;
-            }
-          }, children);
-        }
-      }
-
-      return React.createElement("span", _extends({}, others, {
-        style: _extends({}, sizeStyle, others.style),
-        className: classString,
-        ref: function ref(node) {
-          return _this.avatarNode = node;
-        }
-      }), children);
-    };
-
-    return _this;
-  }
-
-  _createClass(Avatar, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      this.setScale();
-    }
-  }, {
-    key: "componentDidUpdate",
-    value: function componentDidUpdate(prevProps) {
-      this.setScale();
-
-      if (prevProps.src !== this.props.src) {
-        this.setState({
-          isImgExist: true,
-          scale: 1
-        });
-      }
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      return React.createElement(_configProvider.ConfigConsumer, null, this.renderAvatar);
-    }
-  }]);
-
-  return Avatar;
-}(React.Component);
-
-exports["default"] = Avatar;
-Avatar.defaultProps = {
-  shape: 'circle',
-  size: 'default'
-};
-
-/***/ }),
+/* 389 */,
 /* 390 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -73272,23 +72993,8 @@ exports["default"] = _default;
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 485 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-__webpack_require__(11);
-
-__webpack_require__(486);
-
-/***/ }),
-/* 486 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
+/* 485 */,
+/* 486 */,
 /* 487 */
 /***/ (function(module, exports) {
 
@@ -97585,7 +97291,7 @@ var _reactRouterDom = __webpack_require__(51);
 
 var _test = __webpack_require__(747);
 
-__webpack_require__(751);
+__webpack_require__(748);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -97614,8 +97320,110 @@ var Test = function (_React$Component) {
 
         var _this = _possibleConstructorReturn(this, (Test.__proto__ || Object.getPrototypeOf(Test)).call(this, props));
 
+        _this.formatJson = function (json, options) {
+            var reg = null,
+                formatted = '',
+                pad = 0,
+                PADDING = '    '; // one can also use '\t' or a different number of spaces
+
+            // optional settings
+            options = options || {};
+            // remove newline where '{' or '[' follows ':'
+            options.newlineAfterColonIfBeforeBraceOrBracket = options.newlineAfterColonIfBeforeBraceOrBracket === true ? true : false;
+            // use a space after a colon
+            options.spaceAfterColon = options.spaceAfterColon === false ? false : true;
+
+            // begin formatting...
+            if (typeof json !== 'string') {
+                // make sure we start with the JSON as a string
+                json = JSON.stringify(json);
+            } else {
+                // is already a string, so parse and re-stringify in order to remove extra whitespace
+                json = JSON.parse(json);
+                json = JSON.stringify(json);
+            }
+
+            // add newline before and after curly braces
+            reg = /([\{\}])/g;
+            json = json.replace(reg, '\r\n$1\r\n');
+
+            // add newline before and after square brackets
+            reg = /([\[\]])/g;
+            json = json.replace(reg, '\r\n$1\r\n');
+
+            // add newline after comma
+            reg = /(\,)/g;
+            json = json.replace(reg, '$1\r\n');
+
+            // remove multiple newlines
+            reg = /(\r\n\r\n)/g;
+            json = json.replace(reg, '\r\n');
+
+            // remove newlines before commas
+            reg = /\r\n\,/g;
+            json = json.replace(reg, ',');
+
+            // optional formatting...
+            if (!options.newlineAfterColonIfBeforeBraceOrBracket) {
+                reg = /\:\r\n\{/g;
+                json = json.replace(reg, ':{');
+                reg = /\:\r\n\[/g;
+                json = json.replace(reg, ':[');
+            }
+            if (options.spaceAfterColon) {
+                reg = /\:/g;
+                json = json.replace(reg, ':');
+            }
+
+            var _iteratorNormalCompletion = true;
+            var _didIteratorError = false;
+            var _iteratorError = undefined;
+
+            try {
+                for (var _iterator = json.split('\r\n')[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                    var node = _step.value;
+
+                    var i = 0,
+                        indent = 0,
+                        padding = '';
+
+                    if (node.match(/\{$/) || node.match(/\[$/)) {
+                        indent = 1;
+                    } else if (node.match(/\}/) || node.match(/\]/)) {
+                        if (pad !== 0) {
+                            pad -= 1;
+                        }
+                    } else {
+                        indent = 0;
+                    }
+
+                    for (i = 0; i < pad; i++) {
+                        padding += PADDING;
+                    }
+
+                    formatted += padding + node + '\r\n';
+                    pad += indent;
+                }
+            } catch (err) {
+                _didIteratorError = true;
+                _iteratorError = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion && _iterator.return) {
+                        _iterator.return();
+                    }
+                } finally {
+                    if (_didIteratorError) {
+                        throw _iteratorError;
+                    }
+                }
+            }
+
+            return formatted;
+        };
+
         _this.unsubscribe = _test.TestStore.listen(_this.onStatusChange.bind(_this));
-        _this.state = { list: [], blur: "", vehicle: "", cartwheel: "" };
+        _this.state = { list: [], blur: "{}", vehicle: "{}", cartwheel: "{}" };
 
         return _this;
     }
@@ -97678,6 +97486,9 @@ var Test = function (_React$Component) {
             _test.TestActions.vehicle(file);
             this.setState({ uploading: true });
         }
+
+        // Example usage: http://jsfiddle.net/q2gnX/
+
     }, {
         key: 'syntaxHighlight',
         value: function syntaxHighlight(json) {
@@ -97750,7 +97561,7 @@ var Test = function (_React$Component) {
                                     _react2.default.createElement(
                                         _card2.default,
                                         { title: "result" },
-                                        _react2.default.createElement('pre', { dangerouslySetInnerHTML: { __html: this.syntaxHighlight(this.state.blur) } })
+                                        _react2.default.createElement('pre', { dangerouslySetInnerHTML: { __html: this.syntaxHighlight(this.formatJson(this.state.blur)) } })
                                     )
                                 )
                             )
@@ -97788,7 +97599,7 @@ var Test = function (_React$Component) {
                                     _react2.default.createElement(
                                         _card2.default,
                                         { title: "result" },
-                                        _react2.default.createElement('pre', { dangerouslySetInnerHTML: { __html: this.syntaxHighlight(this.state.cartwheel) } })
+                                        _react2.default.createElement('pre', { dangerouslySetInnerHTML: { __html: this.syntaxHighlight(this.formatJson(this.state.cartwheel)) } })
                                     )
                                 )
                             )
@@ -97826,7 +97637,7 @@ var Test = function (_React$Component) {
                                     _react2.default.createElement(
                                         _card2.default,
                                         { title: "result" },
-                                        _react2.default.createElement('pre', { dangerouslySetInnerHTML: { __html: this.syntaxHighlight(this.state.vehicle) } })
+                                        _react2.default.createElement('pre', { dangerouslySetInnerHTML: { __html: this.syntaxHighlight(this.formatJson(this.state.vehicle)) } })
                                     )
                                 )
                             )
@@ -97875,7 +97686,9 @@ var TestStore = _reflux2.default.createStore({
 
     onBlur: function onBlur(file) {
         var self = this;
-        var url = _config2.default.blur + '/upload';
+        // let url = Config.blur + '/upload';
+
+        var url = 'http://' + document.domain + ':4002' + '/upload';
 
         var formFile = new FormData();
         formFile.append("image", file, file.name);
@@ -97897,7 +97710,8 @@ var TestStore = _reflux2.default.createStore({
     },
     onCartwheel: function onCartwheel(file) {
         var self = this;
-        var url = _config2.default.cartwheel + '/upload';
+        // let url = Config.cartwheel + '/upload';
+        var url = 'http://' + document.domain + ':4001' + '/upload';
 
         var formFile = new FormData();
         formFile.append("image", file, file.name);
@@ -97919,7 +97733,8 @@ var TestStore = _reflux2.default.createStore({
     },
     onVehicle: function onVehicle(file) {
         var self = this;
-        var url = _config2.default.vehicle + '/upload';
+        // let url = Config.vehicle + '/upload';
+        var url = 'http://' + document.domain + ':4000' + '/upload';
 
         var formFile = new FormData();
         formFile.append("image", file, file.name);
@@ -97946,6 +97761,12 @@ exports.TestStore = TestStore;
 
 /***/ }),
 /* 748 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 749 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -97996,12 +97817,6 @@ var NotFound = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = NotFound;
-
-/***/ }),
-/* 749 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
 
 /***/ }),
 /* 750 */
