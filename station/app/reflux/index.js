@@ -66,7 +66,6 @@ const Store = Reflux.createStore({
         fetch(url, {
             method: "get",
 
-            credentials: "include"
         })
             .then(response => {
                 response.json().then(function(data){

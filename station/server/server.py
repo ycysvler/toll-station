@@ -50,6 +50,13 @@ def load_config():
 def index():
     return render_template('index.html')
 
+@app.route('/api/stop')
+def stop():
+    name = request.args.get('name')
+    code = subprocess.call(['pm2','stop', name])
+    print('code',code)
+    return jsonify({"code":200})
+
 @app.route('/api/online')
 def change():
     model = request.args.get('model')
@@ -64,8 +71,7 @@ def change():
     cfg[model] = version
     cfg_file = './config.ini'
     json.dump(cfg,open(cfg_file,'w'), indent=4)
-
-    print('version',version)
+ 
     return jsonify({"code":200})
 
 @app.route('/api/download')
@@ -78,7 +84,6 @@ def download():
 def versions():
     result = requests.get(center_base + '/api/version').json()
     config = load_config()
-
 
     for item in result['data']:
         # check model file is exist
@@ -98,8 +103,6 @@ def versions():
     #return jsonify([{"version":"1.0","local":False, "current":False},{"version":"2.0","local":True, "current":True}])
 
 
-if __name__ == "__main__":
-    code = subprocess.call(['pm2','list'])
-    print('code',code)
-    app.run(host='0.0.0.0',port=8001)
+if __name__ == "__main__": 
+    app.run(host='0.0.0.0',port=8000)
 

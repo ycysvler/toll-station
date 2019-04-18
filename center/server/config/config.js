@@ -16,6 +16,6 @@ module.exports = {
     }, 
     // server 相关配置
     server: {
-        port: 4001  
+        port: 8002 
     }
 };
