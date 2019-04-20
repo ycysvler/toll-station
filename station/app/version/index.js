@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import {HashRouter as Router, Route, Link, Switch, Redirect} from 'react-router-dom';
-import {Layout, Menu, Divider, Icon, Button, Table} from 'antd';
+import {Layout, Menu, Divider, Icon, Button, Table, Spin} from 'antd';
 import VersionInfo from './info';
 import {Actions, Store} from '../reflux';
 
@@ -30,7 +30,7 @@ export default class Version extends React.Component {
     onStatusChange(action, data) {
         switch (action) {
             case "list":
-                this.setState({list: data.data});
+                this.setState({list: data.data, loading:false});
                 break;
             case "download":
             case "online":
@@ -87,15 +87,17 @@ export default class Version extends React.Component {
                 return <span>
                 {record.current ? null : <a href={"javascript:;"}
                                      onClick={() => {
+                                         this.setState({loading:true});
                                          Actions.online(
                                              record.model, record.version, record.filename,record.path
-                                         )
+                                         );
                                      }}
                 >启动</a>}
                     {record.current ? null : <Divider type="vertical"/>}
                     {record.exist ? null:<a href="javascript:;"
                        onClick={() => {
-                           Actions.download(record.filename)
+                           this.setState({loading:true});
+                           Actions.download(record.filename);
                        }}
                     >下载</a>}
             </span>
@@ -107,11 +109,11 @@ export default class Version extends React.Component {
             <Layout>
 
                 <Layout style={{borderLeft: 'solid 1px #e8e8e8', padding: 16}}>
-                    <div style={{paddingBottom: 16}}><Button icon="plus" type="primary"
+                    <div style={{paddingBottom: 16}}><Button icon="plus" type="primary" style={{marginRight:16}}
                                                              onClick={() => {
                                                                  this.setState({"modal": true})
                                                              }}
-                    >Add</Button></div>
+                    >Add</Button> {this.state.loading?<Spin  />:null} </div>
 
                     <Table bordered rowKey="_id" dataSource={this.state.list} columns={this.columns}/>
 

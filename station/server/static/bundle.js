@@ -62473,8 +62473,8 @@ var Main = exports.Main = function (_React$Component) {
                         {
                             style: { flexGrow: 1 },
                             theme: 'dark',
-                            mode: 'horizontal',
-                            selectedKeys: ["test"]
+                            mode: 'horizontal'
+
                         },
                         _react2.default.createElement(
                             _menu2.default.Item,
@@ -73302,6 +73302,10 @@ var _table = __webpack_require__(487);
 
 var _table2 = _interopRequireDefault(_table);
 
+var _spin = __webpack_require__(626);
+
+var _spin2 = _interopRequireDefault(_spin);
+
 var _button = __webpack_require__(38);
 
 var _button2 = _interopRequireDefault(_button);
@@ -73321,6 +73325,8 @@ var _layout2 = _interopRequireDefault(_layout);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 __webpack_require__(630);
+
+__webpack_require__(640);
 
 __webpack_require__(51);
 
@@ -73425,6 +73431,7 @@ var Version = function (_React$Component) {
                         'a',
                         { href: "javascript:;",
                             onClick: function onClick() {
+                                _this.setState({ loading: true });
                                 _reflux.Actions.online(record.model, record.version, record.filename, record.path);
                             }
                         },
@@ -73435,6 +73442,7 @@ var Version = function (_React$Component) {
                         'a',
                         { href: 'javascript:;',
                             onClick: function onClick() {
+                                _this.setState({ loading: true });
                                 _reflux.Actions.download(record.filename);
                             }
                         },
@@ -73466,7 +73474,7 @@ var Version = function (_React$Component) {
         value: function onStatusChange(action, data) {
             switch (action) {
                 case "list":
-                    this.setState({ list: data.data });
+                    this.setState({ list: data.data, loading: false });
                     break;
                 case "download":
                 case "online":
@@ -73492,13 +73500,16 @@ var Version = function (_React$Component) {
                         { style: { paddingBottom: 16 } },
                         _react2.default.createElement(
                             _button2.default,
-                            { icon: 'plus', type: 'primary',
+                            { icon: 'plus', type: 'primary', style: { marginRight: 16 },
                                 onClick: function onClick() {
                                     _this2.setState({ "modal": true });
                                 }
                             },
                             'Add'
-                        )
+                        ),
+                        ' ',
+                        this.state.loading ? _react2.default.createElement(_spin2.default, null) : null,
+                        ' '
                     ),
                     _react2.default.createElement(_table2.default, { bordered: true, rowKey: '_id', dataSource: this.state.list, columns: this.columns }),
                     _react2.default.createElement(_info2.default, { refresh: this.refresh, showModal: this.state.modal })

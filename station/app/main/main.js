@@ -42,7 +42,7 @@ export class Main extends React.Component {
                         style={{flexGrow: 1}}
                         theme="dark"
                         mode="horizontal"
-                        selectedKeys={["test"]}
+                        
                     >
                         <Menu.Item key="test">
                             <Link to='/main/test'>接口测试</Link>
