@@ -47,9 +47,9 @@ export class Main extends React.Component {
                         <Menu.Item key="test">
                             <Link to='/main/test'>接口测试</Link>
                         </Menu.Item>
-                        {/*<Menu.Item key="app">*/}
-                            {/*<Link to='/main/version'>版本管理</Link> */}
-                        {/*</Menu.Item>*/}
+                        <Menu.Item key="app">
+                            <Link to='/main/version'>版本管理</Link> 
+                        </Menu.Item>
                         {/*<Menu.Item key="1">*/}
                             {/*<Link to='/main/face'>人脸识别</Link>*/}
 

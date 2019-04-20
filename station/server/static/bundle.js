@@ -35709,9 +35709,9 @@ var Store = _reflux2.default.createStore({
 
     listenables: [Actions],
 
-    onOnline: function onOnline(model, version, filename) {
+    onOnline: function onOnline(model, version, filename, path) {
         var self = this;
-        var url = _config2.default.base + '/api/online?filename=' + filename + '&model=' + model + '&version=' + version;
+        var url = _config2.default.base + '/api/online?filename=' + filename + '&model=' + model + '&version=' + version + '&path=' + path;
         fetch(url, {
             method: "get",
 
@@ -36044,7 +36044,7 @@ Object.defineProperty(exports, "__esModule", {
 /* 348 */
 /***/ (function(module, exports) {
 
-module.exports = {"name":"visual-control-platform-dev","titleSuffix":" - 管理平台","base":"http://localhost:8002","blur":"http://192.168.31.145:4002","cartwheel":"http://192.168.31.145:4001","vehicle":"http://192.168.31.145:4000"};
+module.exports = {"name":"visual-control-platform-dev","titleSuffix":" - 管理平台","base":"http://localhost:4101","blur":"http://192.168.31.145:4002","cartwheel":"http://192.168.31.145:4001","vehicle":"http://192.168.31.145:4000"};
 
 /***/ }),
 /* 349 */
@@ -62484,6 +62484,15 @@ var Main = exports.Main = function (_React$Component) {
                                 { to: '/main/test' },
                                 '\u63A5\u53E3\u6D4B\u8BD5'
                             )
+                        ),
+                        _react2.default.createElement(
+                            _menu2.default.Item,
+                            { key: 'app' },
+                            _react2.default.createElement(
+                                _reactRouterDom.Link,
+                                { to: '/main/version' },
+                                '\u7248\u672C\u7BA1\u7406'
+                            )
                         )
                     )
                 ),
@@ -73416,7 +73425,7 @@ var Version = function (_React$Component) {
                         'a',
                         { href: "javascript:;",
                             onClick: function onClick() {
-                                _reflux.Actions.online(record.model, record.version, record.filename);
+                                _reflux.Actions.online(record.model, record.version, record.filename, record.path);
                             }
                         },
                         '\u542F\u52A8'

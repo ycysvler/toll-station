@@ -88,7 +88,7 @@ export default class Version extends React.Component {
                 {record.current ? null : <a href={"javascript:;"}
                                      onClick={() => {
                                          Actions.online(
-                                             record.model, record.version, record.filename
+                                             record.model, record.version, record.filename,record.path
                                          )
                                      }}
                 >启动</a>}

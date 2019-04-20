@@ -15,7 +15,7 @@ import zipfile
 import requests
 import json
 import subprocess
-from config import center_base, model_base
+from config import center_base,local_root_path,local_models_path
 
 sys.path.append('./util')
 
@@ -25,21 +25,23 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app, resources=r'/*')
 
-def un_zip(zip, expath):
-    f = zipfile.ZipFile(zip,'r')
-    for file in f.namelist():
-        f.extract(file,expath)
+
+cfg_file = local_root_path + 'config.ini'
+
+def un_zip(zippath, expath):
+    os.system('unzip -o -d ' + expath + ' ' + zippath)
+    #f = zipfile.ZipFile(zip,'r')
+    #for file in f.namelist():
+    #    f.extract(file,expath)
 
 def download_big_file_with_wget(url, target_file_name):
     download_process = subprocess.Popen("wget -c -O "+ target_file_name +" " + url, shell=True)
-
     download_process.wait()
 
     if not os.path.exists(target_file_name):
         raise Exception("fail to download file from {}".format(url))
 
-def load_config():
-    cfg_file = './config.ini'
+def load_config(): 
     exist = os.path.exists(cfg_file)
     if not exist:
         result = {"config":"config"}
@@ -53,31 +55,36 @@ def index():
 @app.route('/api/stop')
 def stop():
     name = request.args.get('name')
-    code = subprocess.call(['pm2','stop', name])
-    print('code',code)
+    os.system('pm2 stop ' + name)
+    return jsonify({"code":200})
+
+@app.route('/api/restart')
+def restart():
+    name = request.args.get('name')
+    os.system('pm2 restart ' + name)
     return jsonify({"code":200})
 
 @app.route('/api/online')
 def change():
+    path = request.args.get('path')
     model = request.args.get('model')
     version = request.args.get('version')
     filename = request.args.get('filename')
 
-    un_zip('./static/models/'+filename, model_base)
+    un_zip(local_models_path + filename, path)
 
     # 缺少一个停服务,启服务
+    os.system('pm2 restart ' + model)
 
     cfg = load_config()
-    cfg[model] = version
-    cfg_file = './config.ini'
-    json.dump(cfg,open(cfg_file,'w'), indent=4)
- 
+    cfg[model] = version    
+    json.dump(cfg,open(cfg_file,'w'), indent=4) 
     return jsonify({"code":200})
 
 @app.route('/api/download')
 def download():
     filename = request.args.get('filename')
-    download_big_file_with_wget(center_base + '/models/' + filename,'./static/models/' + filename)
+    download_big_file_with_wget(center_base + '/models/' + filename,local_models_path + filename)
     return jsonify({"code":200, "filename":filename})
 
 @app.route('/api/version')
@@ -88,9 +95,10 @@ def versions():
     for item in result['data']:
         # check model file is exist
         filename = item['filename']
-        exist = os.path.exists('./static/models/'+filename)
+        exist = os.path.exists(local_models_path + filename)
         item['exist'] = exist
         item['local'] = False
+        
         # check local is the version
         if item['model'] in config:
             if config[item['model']] == item['version'] :
@@ -104,5 +112,5 @@ def versions():
 
 
 if __name__ == "__main__": 
-    app.run(host='0.0.0.0',port=8000)
+    app.run(host='0.0.0.0',port=4101)
 
