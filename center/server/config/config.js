@@ -7,7 +7,7 @@
 module.exports = {
     // mongodb 相关配置
     mongodb: {
-        uri: 'mongodb://192.168.1.103/',
+        uri: 'mongodb://localhost/',
         options: {
             useNewUrlParser:true,
             auto_reconnect: true,
