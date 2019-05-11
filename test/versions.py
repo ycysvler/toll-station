@@ -17,6 +17,8 @@ app = Flask(__name__)
 
 @app.route('/versions')
 def hello_world():
+    ip = request.remote_addr
+    print('ip', ip)
     task = {
         'id': "23",
         'info': "jodany"
@@ -30,4 +32,4 @@ def hello_world():
 
 if __name__ == "__main__":
     # 这种是不太推荐的启动方式，我这只是做演示用，官方启动方式参见：http://flask.pocoo.org/docs/0.12/quickstart/#a-minimal-application
-    app.run()
+    app.run(host='0.0.0.0',port=5000)
