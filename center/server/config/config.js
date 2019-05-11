@@ -7,7 +7,7 @@
 module.exports = {
     // mongodb 相关配置
     mongodb: {
-        uri: 'mongodb://192.168.1.103/',
+        uri: 'mongodb://localhost/',
         options: {
             useNewUrlParser:true,
             auto_reconnect: true,
@@ -16,6 +16,6 @@ module.exports = {
     }, 
     // server 相关配置
     server: {
-        port: 4001  
+        port: 4100 
     }
 };

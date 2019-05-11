@@ -16,9 +16,9 @@ const Store = Reflux.createStore({
 
     listenables: [Actions],
 
-    onOnline(model, version, filename){
+    onOnline(model, version, filename, path){
         let self = this;
-        let url =`${Config.base}/api/online?filename=${filename}&model=${model}&version=${version}`;
+        let url =`${Config.base}/api/online?filename=${filename}&model=${model}&version=${version}&path=${path}`;
         fetch(url, {
             method: "get",
 
@@ -66,7 +66,6 @@ const Store = Reflux.createStore({
         fetch(url, {
             method: "get",
 
-            credentials: "include"
         })
             .then(response => {
                 response.json().then(function(data){

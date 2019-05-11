@@ -45,6 +45,7 @@ class VersionInfo extends React.Component {
             if (!err) {
                 console.log('Received values of form: ', values);
                 values.filename = this.state.fileName;
+                values.path = `/root/${values.model}/models/`;
                 Actions.create(values);
             }
         });
@@ -106,8 +107,8 @@ class VersionInfo extends React.Component {
                                     ],
                                 })(<Select >
                                     <Option key={"vehicle"}>车型</Option>
-                                    <Option key={"wheelbase"}>轴距</Option>
-                                    <Option key={"quality"}>质量</Option>
+                                    <Option key={"cartwheel"}>轴距</Option>
+                                    <Option key={"detectBlur"}>质量</Option>
                                 </Select>)}
                             </FormItem>
 

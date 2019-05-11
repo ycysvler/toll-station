@@ -8,8 +8,7 @@
 # pip install gunicorn
 #  gunicorn -w 4 -b 127.0.0.1:4000 versions:app
 
-from flask import Flask, abort, request,jsonify
-from flask_script import Manager
+from flask import Flask, abort, request,jsonify 
 from multiprocessing import Process, Pipe
 import time
 
