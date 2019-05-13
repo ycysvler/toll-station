@@ -17,7 +17,10 @@ import json
 import subprocess
 from config import center_base,local_root_path,local_models_path
 
+
 sys.path.append('./util')
+
+import mongodb
 
 from flask import Flask, abort, request,jsonify,render_template
 from flask_cors import CORS
@@ -109,6 +112,47 @@ def versions():
     return jsonify(result)
     # 返回所有版本，本地有没有压缩包，正在使用的版本
     #return jsonify([{"version":"1.0","local":False, "current":False},{"version":"2.0","local":True, "current":True}])
+
+@app.route('/api/test/detectblur')
+def detectblur():
+    items = mongodb.db().t_detectblur.find()
+    output = []
+    for s in items:
+        output.append({'name' : s['name'],'blur' : s['blur']})
+    return jsonify(output)
+
+
+
+    #"vehicleType_score" : 0.257,
+    #"v_class" : "1class",
+    #"v_type" : "Car",
+    #"v_manufacturer" : "比亚迪",
+    #"v_brand" : "比亚迪",
+    #"v_series" : "比亚迪F3",
+    #"v_year" : "2015款",
+    #"v_model" : "1.6L舒适型",
+    #"vehicleColor" : "white",
+    #"vehicleColor_score" : 1.0
+
+@app.route('/api/test/vehicle')
+def vehicle():
+    items = mongodb.db().t_vehicle.find()
+    output = []
+    for s in items:
+        license = ""
+        license_score = 0.0
+        try:
+            if hasattr(s, 'license'):
+                license = s['license']
+
+            if hasattr(s, 'license_score'):
+             license_score = s['license_score']
+
+        except AttributeError as e:
+            pass
+
+        output.append({'name' : s['name'],'license' :license,'license_score' : license_score,'vehicleType' : s['vehicleType']})
+    return jsonify(output)
 
 
 if __name__ == "__main__": 

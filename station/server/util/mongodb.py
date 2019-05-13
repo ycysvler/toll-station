@@ -2,11 +2,10 @@
 # -*- coding: UTF-8 -*-
 # pip install pymongo
 from pymongo import MongoClient
-import config
 
-conn = MongoClient(config.mongodb['host'], config.mongodb['port'])
+conn = MongoClient('localhost', 27017)
 def db():
-    return conn['patentdb']
+    return conn['test']
 
 if __name__ == "__main__":
     db().test.save({'name': 'aa'})
