@@ -4,7 +4,10 @@ import Config from 'config';
 const TestActions = Reflux.createActions([
         'blur',
         'cartwheel',
-        'vehicle'
+        'vehicle',
+        'vehicleList',
+    'cartwheelList',
+    'detectblurList'
     ]
 );
 
@@ -93,6 +96,42 @@ const TestStore = Reflux.createStore({
                     cb(null, error.message, 500);
                 }
             });
+    },
+
+    onVehicleList(name){
+        let self = this;
+        let url = `http://${document.domain}:4101`+ '/api/test/vehicle';
+        fetch(url, {
+            method:'get'
+        }).then(res=>{
+            res.json().then((data)=>{
+                self.trigger('vehicleList', data);
+            });
+        })
+    },
+
+    onCartwheelList(name){
+        let self = this;
+        let url = `http://${document.domain}:4101`+ '/api/test/cartwheel';
+        fetch(url, {
+            method:'get'
+        }).then(res=>{
+            res.json().then((data)=>{
+                self.trigger('cartwheelList', data);
+            });
+        })
+    },
+
+    onDetectblurList(name){
+        let self = this;
+        let url = `http://${document.domain}:4101`+ '/api/test/detectblur';
+        fetch(url, {
+            method:'get'
+        }).then(res=>{
+            res.json().then((data)=>{
+                self.trigger('detectblurList', data);
+            });
+        })
     }
 });
 

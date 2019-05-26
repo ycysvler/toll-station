@@ -115,46 +115,22 @@ def versions():
 
 @app.route('/api/test/detectblur')
 def detectblur():
-    items = mongodb.db().t_detectblur.find()
-    output = []
-    for s in items:
-        output.append({'name' : s['name'],'blur' : s['blur']})
-    return jsonify(output)
-
-
-
-    #"vehicleType_score" : 0.257,
-    #"v_class" : "1class",
-    #"v_type" : "Car",
-    #"v_manufacturer" : "比亚迪",
-    #"v_brand" : "比亚迪",
-    #"v_series" : "比亚迪F3",
-    #"v_year" : "2015款",
-    #"v_model" : "1.6L舒适型",
-    #"vehicleColor" : "white",
-    #"vehicleColor_score" : 1.0
+    items =list( mongodb.db().t_detectblur.find({},{"_id":0}).limit(30))
+    return jsonify(items)
 
 @app.route('/api/test/vehicle')
 def vehicle():
-    items = mongodb.db().t_vehicle.find()
-    output = []
-    for s in items:
-        license = ""
-        license_score = 0.0
-        try:
-            if hasattr(s, 'license'):
-                license = s['license']
+    items = list(mongodb.db().t_vehicle.find({},{"_id":0}).limit(30))
+    return jsonify(items)
 
-            if hasattr(s, 'license_score'):
-             license_score = s['license_score']
-
-        except AttributeError as e:
-            pass
-
-        output.append({'name' : s['name'],'license' :license,'license_score' : license_score,'vehicleType' : s['vehicleType']})
-    return jsonify(output)
+@app.route('/api/test/cartwheel')
+def cartwheel():
+    items = list(mongodb.db().t_cartwheel.find({},{"_id":0}).limit(30))
+    return jsonify(items)
 
 
-if __name__ == "__main__": 
+
+if __name__ == "__main__":
     app.run(host='0.0.0.0',port=4101)
+
 
