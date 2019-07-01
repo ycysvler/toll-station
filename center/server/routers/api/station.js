@@ -36,7 +36,7 @@ module.exports = function (router) {
             let data = null;
             let error_msg = null;
             let body = ctx.request.body;
-            body['ip'] = ip;
+            body['ip'] = body.ip ? body.ip : ip;
 
             data = await logic.create(body).catch(function (err) {
                 error_code = err.code;

@@ -5,6 +5,7 @@ import React from 'react';
 import {HashRouter as Router, Route, Link, Switch, Redirect} from 'react-router-dom';
 import moment from 'moment';
 import Version from '../version';
+import Station from '../station';
 import {Layout, Badge, Dropdown, Button, Divider, notification, Menu, message, Modal, Avatar, Row, Col} from 'antd';
 import {NotFound} from '../notfound';
 
@@ -42,21 +43,10 @@ export class Main extends React.Component {
                     >
                         <Menu.Item key="app">
                             <Link to='/main/version'>版本管理</Link>
-
                         </Menu.Item>
-                        {/*<Menu.Item key="1">*/}
-                            {/*<Link to='/main/face'>人脸识别</Link>*/}
-
-                        {/*</Menu.Item>*/}
-                        {/*<Menu.Item key="2">*/}
-                        {/*警务信息*/}
-                        {/*</Menu.Item>*/}
-                        {/*<Menu.Item key="3">*/}
-                            {/*<Link to='/main/business'>资源管理</Link>*/}
-                        {/*</Menu.Item>*/}
-                        {/*<Menu.Item key="4">*/}
-                            {/*<Link to='/main/system'>系统设置</Link> */}
-                        {/*</Menu.Item>*/}
+                        <Menu.Item key="station">
+                            <Link to='/main/station'>收费站管理</Link>
+                        </Menu.Item>
                     </Menu>
 
                     <div className='user'>
@@ -80,6 +70,7 @@ export class Main extends React.Component {
                     <Router>
                         <Switch>
                             <Route path="/main/version" component={Version}/>
+                            <Route path="/main/station" component={Station}/>
                             <Route component={NotFound}/>
                         </Switch>
                     </Router>
