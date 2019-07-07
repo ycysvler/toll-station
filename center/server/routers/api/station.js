@@ -67,6 +67,25 @@ module.exports = function (router) {
             {error_code: error_code, data: data};
     });
 
+    // 获取监控信息
+    router.get('/monitor', async(ctx) => {
+        let error_code = 0;
+        let data = null;
+        let error_msg = null;
+
+        let req_query = ctx.request.query;
+        console.log('req_query', req_query);
+
+        data = await logic.monitor(req_query).catch(function (err) {
+            error_code = err.code;
+            error_msg = err.errmsg;
+        });
+
+        ctx.body = error_code ?
+            {error_code: error_code, error_msg} :
+            {error_code: error_code, data: data};
+    });
+
 
     router.delete('/station', async(ctx) => {
         let ok = tools.required(ctx, ["_id"]);

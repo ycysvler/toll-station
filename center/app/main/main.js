@@ -6,6 +6,7 @@ import {HashRouter as Router, Route, Link, Switch, Redirect} from 'react-router-
 import moment from 'moment';
 import Version from '../version';
 import Station from '../station';
+import Monitor from '../monitor';
 import {Layout, Badge, Dropdown, Button, Divider, notification, Menu, message, Modal, Avatar, Row, Col} from 'antd';
 import {NotFound} from '../notfound';
 
@@ -21,7 +22,11 @@ export class Main extends React.Component {
         super(props);
         moment.locale('zh-cn');
 
-        this.state = {hasNewMsg: false};
+        let url = window.location.href.split('#');
+        let menukey = '/main/monitor';
+        menukey = url.length > 1 ? url[1] : menukey;
+
+        this.state = {hasNewMsg: false, menukey:menukey};
     }
 
     componentWillUnmount() {
@@ -30,22 +35,30 @@ export class Main extends React.Component {
 
 
     render() {
-
         return (<Layout className="main">
-                <div className="header">
-                    <div className="logo">
-                        中心管理平台
+                <div className="header" style={{background:'#fff'}}>
+                    <img src="/logo.jpeg" style={{height:40}} />
+                    <div className="logo" style={{color:'#000'}}>
+
+                        交通图片识别中心管理平台
                     </div>
                     <Menu
+                        onSelect={(item,key)=>{
+                            this.setState({"menukey":item.key});
+                        }}
+                        selectedKeys={[this.state.menukey]}
                         style={{flexGrow: 1}}
-                        theme="dark"
+                        theme="light"
                         mode="horizontal"
                     >
-                        <Menu.Item key="app">
+                        <Menu.Item key="/main/version">
                             <Link to='/main/version'>版本管理</Link>
                         </Menu.Item>
-                        <Menu.Item key="station">
+                        <Menu.Item key="/main/station">
                             <Link to='/main/station'>收费站管理</Link>
+                        </Menu.Item>
+                        <Menu.Item key="/main/monitor">
+                            <Link to='/main/monitor'>服务状态管理</Link>
                         </Menu.Item>
                     </Menu>
 
@@ -71,6 +84,8 @@ export class Main extends React.Component {
                         <Switch>
                             <Route path="/main/version" component={Version}/>
                             <Route path="/main/station" component={Station}/>
+                            <Route path="/main/monitor" component={Monitor}/>
+
                             <Route component={NotFound}/>
                         </Switch>
                     </Router>

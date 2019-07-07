@@ -23,7 +23,9 @@ module.exports = class StationLogic {
                         let item = {};
                         item['name'] = data.name ? data.name:station.name;
                         item['describe'] = data.describe ? data.describe:station.describe;
-                        item['status'] = data.status ? data.status:station.status;
+                        item['blur_status'] = data.blur_status ? data.blur_status:station.blur_status;
+                        item['vehicle_status'] = data.vehicle_status ? data.vehicle_status:station.vehicle_status;
+                        item['cartwheel_status'] = data.cartwheel_status ? data.cartwheel_status:station.cartwheel_status;
                         Doc.update({ip: data.ip}, item, function (err, Item) {
                             if (err) {
                                 reject(err);
@@ -47,6 +49,25 @@ module.exports = class StationLogic {
         return new Promise((resolve, reject) => {
             let doc = getMongoPool().Station;
             doc.find({}).exec((err, results)=>{
+                if(err){reject(err);}
+                else{resolve(results);}
+            });
+        });
+    }
+
+    monitor(req_query){
+        return new Promise((resolve, reject) => {
+            let doc = getMongoPool().Station;
+
+            let filter = {};
+            if(req_query.ip){filter.ip = req_query.ip;}
+            if(req_query.v){filter.vehicle_status = req_query.v;}
+            if(req_query.c){filter.cartwheel_status = req_query.c;}
+            if(req_query.b){filter.blur_status = req_query.b;}
+
+            console.log('query', filter);
+
+            doc.find(filter).exec((err, results)=>{
                 if(err){reject(err);}
                 else{resolve(results);}
             });

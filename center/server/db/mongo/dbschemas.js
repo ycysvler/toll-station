@@ -28,7 +28,9 @@ module.exports = class Schemas {
             ip: String,                                                         // ip
             name: String,                                                       // name
             describe: String,                                                   // 描述信息
-            status: {type:Number, default:0},                                   // 状态 0：新建、1：正常、-1：失联
+            vehicle_status: {type:Number, default:0},                           // 车型状态 0：新建、1：正常、-1：失联
+            cartwheel_status: {type:Number, default:0},                         // 车轴状态 0：新建、1：正常、-1：失联
+            blur_status: {type:Number, default:0},                              // 模糊状态 0：新建、1：正常、-1：失联
             updatetime: Date                                                    // 更新时间
         });
         this.stationSchema.index({ip: 1});

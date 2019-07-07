@@ -39,24 +39,10 @@ export default class Station extends React.Component {
 
     refresh=()=>{
         Actions.list();
-        setInterval(this.refresh, 60 * 1000);
-
+        //setInterval(this.refresh, 60 * 1000);
     };
 
     columns = [{
-        title: '状态',
-        width:120,
-        dataIndex: 'status',
-        key: 'status',
-        render:(text, record)=>{
-            switch(record.status){
-                case 0:return <Tag color="#2db7f5">新增</Tag>;
-                case 1:return <Tag color="#87d068">正常</Tag>;
-                case -1:return <Tag color="#f50">失联</Tag>;
-                case -2:return <Tag color="#f50">异常</Tag>;
-            }
-        }
-    }, {
         title: '地址',
         dataIndex: 'ip',
         key: 'ip',

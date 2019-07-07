@@ -32,22 +32,42 @@ def batchFeature():
 def run():
     for station in mongodb.db('').stations.find({}):
         ip = station['ip']
-        result = test(ip)
-        print(ip, result)
-        if result:
-            mongodb.db('').stations.update({'_id':station['_id']},{'$set':{'status':1}})
-        else:
-            mongodb.db('').stations.update({'_id':station['_id']},{'$set':{'status':-1}})
+        vehicle_result = test(ip, "4000", "vehicle")
+        cartwheel_result = test(ip, "4001", "cartwheel")
+        blur_result = test(ip, "4002", "blur")
 
-def test(ip):
-    files = {"image":open("./test.jpg", "rb")}
+        print(ip, '\tvehicle:',vehicle_result, '\tcartwheel:',cartwheel_result, '\tblur:',blur_result)
+
+        if vehicle_result:
+            mongodb.db('').stations.update({'_id':station['_id']},{'$set':{'vehicle_status':1}})
+        else:
+            mongodb.db('').stations.update({'_id':station['_id']},{'$set':{'vehicle_status':-1}})
+
+        if cartwheel_result:
+            mongodb.db('').stations.update({'_id':station['_id']},{'$set':{'cartwheel_status':1}})
+        else:
+            mongodb.db('').stations.update({'_id':station['_id']},{'$set':{'cartwheel_status':-1}})
+
+        if blur_result:
+            mongodb.db('').stations.update({'_id':station['_id']},{'$set':{'blur_status':1}})
+        else:
+            mongodb.db('').stations.update({'_id':station['_id']},{'$set':{'blur_status':-1}})
+
+def test(ip, port, type):
+    files = {"image":open("./"+type+".jpg", "rb")}
     try:
-        res = requests.post('http://'+ip+':4000/upload',None,files=files)
+        res = requests.post('http://'+ip+':' + port +'/upload',None,files=files)
     except Exception as e:
         return False
     else:
         bean = json.loads(res.text)
-        return True
+        if bean != None:
+            if bean['code'] == 200:
+                return True
+            else:
+                return False
+        else:
+            return True
 
 if __name__ == '__main__':
     #batchFeature()
