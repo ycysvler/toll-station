@@ -39,8 +39,7 @@ export class Main extends React.Component {
                 <div className="header" style={{background:'#fff'}}>
                     <img src="/logo.jpeg" style={{height:40}} />
                     <div className="logo" style={{color:'#000'}}>
-
-                        交通图片识别中心管理平台
+                        高速公路智能车型识别系统
                     </div>
                     <Menu
                         onSelect={(item,key)=>{

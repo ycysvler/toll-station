@@ -21,7 +21,11 @@ export class Main extends React.Component {
         super(props);
         moment.locale('zh-cn');
 
-        this.state = {hasNewMsg: false};
+        let url = window.location.href.split('#');
+        let menukey = '/main/monitor';
+        menukey = url.length > 1 ? url[1] : menukey;
+
+        this.state = {hasNewMsg: false, menukey:menukey};
     }
 
     componentWillUnmount() {
@@ -32,22 +36,27 @@ export class Main extends React.Component {
     render() {
 
         return (<Layout className="main">
-                <div className="header">
-                    <div className="logo">
+                <div className="header" style={{background:'#fff'}}>
+                    <img src="./static/logo.jpeg" style={{height:40}} />
+                    <div className="logo" style={{color:'#000'}}>
                         {/*<Avatar style={{marginRight: 8}}*/}
                                 {/*src=""/>*/}
-                        图像识别
+                        高速公路智能车型识别系统
                     </div>
                     <Menu
+                        onSelect={(item,key)=>{
+                            this.setState({"menukey":item.key});
+                        }}
+                        selectedKeys={[this.state.menukey]}
                         style={{flexGrow: 1}}
-                        theme="dark"
+                        theme="light"
                         mode="horizontal"
                         
                     >
-                        <Menu.Item key="test">
+                        <Menu.Item key="/main/test">
                             <Link to='/main/test'>接口测试</Link>
                         </Menu.Item>
-                        <Menu.Item key="app">
+                        <Menu.Item key="/main/version">
                             <Link to='/main/version'>版本管理</Link> 
                         </Menu.Item>
                         {/*<Menu.Item key="1">*/}

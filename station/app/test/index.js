@@ -15,6 +15,8 @@ export default class Test extends React.Component {
     constructor(props) {
         super(props);
 
+
+
         this.unsubscribe = TestStore.listen(this.onStatusChange.bind(this));
         this.state = {list: [], vehicles:[],cartwheels:[],  blur: "{}", vehicle: "{}", cartwheel: "{}"};
 
@@ -302,32 +304,32 @@ export default class Test extends React.Component {
                                 </div>
                             </div>
                         </TabPane>
-                        <TabPane tab="模糊测试" key="4"></TabPane>
-                        <TabPane tab="车轮数量测试" key="5">
-                            <div>
-                                <Button
-                                    onClick={()=>{
-                                        TestActions.cartwheelList('');
-                                    }}
-                                >get list</Button>
-                                <div></div>
-                                <br />
-                                <Table rowKey={"name"} dataSource={this.state.cartwheels} columns={this.cartwheelColumns} />
-                            </div>
-                        </TabPane>
-                        <TabPane tab="车型测试" key="6">
-                            <div>
-                                <Button
-                                onClick={()=>{
-                                    TestActions.vehicleList('');
-                                }}
-                                >get list</Button>
-                                <div></div>
-                                <br />
-                                <Table rowKey={"name"} dataSource={this.state.vehicles} columns={this.vehicleColumns} />
-                            </div>
+                        {/*<TabPane tab="模糊测试" key="4"></TabPane>*/}
+                        {/*<TabPane tab="车轮数量测试" key="5">*/}
+                        {/*    <div>*/}
+                        {/*        <Button*/}
+                        {/*            onClick={()=>{*/}
+                        {/*                TestActions.cartwheelList('');*/}
+                        {/*            }}*/}
+                        {/*        >get list</Button>*/}
+                        {/*        <div></div>*/}
+                        {/*        <br />*/}
+                        {/*        <Table rowKey={"name"} dataSource={this.state.cartwheels} columns={this.cartwheelColumns} />*/}
+                        {/*    </div>*/}
+                        {/*</TabPane>*/}
+                        {/*<TabPane tab="车型测试" key="6">*/}
+                        {/*    <div>*/}
+                        {/*        <Button*/}
+                        {/*        onClick={()=>{*/}
+                        {/*            TestActions.vehicleList('');*/}
+                        {/*        }}*/}
+                        {/*        >get list</Button>*/}
+                        {/*        <div></div>*/}
+                        {/*        <br />*/}
+                        {/*        <Table rowKey={"name"} dataSource={this.state.vehicles} columns={this.vehicleColumns} />*/}
+                        {/*    </div>*/}
 
-                        </TabPane>
+                        {/*</TabPane>*/}
                     </Tabs>
 
                 </Layout>

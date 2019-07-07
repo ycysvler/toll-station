@@ -17,7 +17,6 @@ import json
 import subprocess
 from config import center_base,local_root_path,local_models_path
 
-
 sys.path.append('./util')
 
 import mongodb
@@ -27,7 +26,6 @@ from flask_cors import CORS
 
 app = Flask(__name__)
 CORS(app, resources=r'/*')
-
 
 cfg_file = local_root_path + 'config.ini'
 
