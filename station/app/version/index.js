@@ -72,11 +72,18 @@ export default class Version extends React.Component {
             key: 'current', render: (text, record) => {
                 return <span>{text ? "Y" : "N"}</span>
             }
-        }, {
-            title: '状态',
-            dataIndex: 'status',
-            key: 'status',
-        }, {
+        },{
+                 title: '状态',
+                 dataIndex: 'status',
+                 key: 'status',
+                 render:(text,record)=>{
+                     switch(record.status){
+                         case 0:return <span>新增</span>;
+                         case 1:return <span>已上线</span>;
+                         case -1:return <span>已下线</span>;
+                     }
+                 }
+             }, {
             title: '描述',
             dataIndex: 'describe',
             key: 'describe',
@@ -84,16 +91,21 @@ export default class Version extends React.Component {
             title: '操作',
             key: 'action',
             render: (text, record) => {
+                let showRun = false;    // 显示启动
+                if(record.exist && !record.current){
+                    showRun = true;
+                }
+
                 return <span>
-                {record.current ? null : <a href={"javascript:;"}
+                { showRun ?  <a href={"javascript:;"}
                                      onClick={() => {
                                          this.setState({loading:true});
                                          Actions.online(
                                              record.model, record.version, record.filename,record.path
                                          );
                                      }}
-                >启动</a>}
-                    {record.current ? null : <Divider type="vertical"/>}
+                >启动</a> : null}
+
                     {record.exist ? null:<a href="javascript:;"
                        onClick={() => {
                            this.setState({loading:true});

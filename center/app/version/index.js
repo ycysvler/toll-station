@@ -53,13 +53,20 @@ export default class Version extends React.Component {
         dataIndex: 'version',
         key: 'version',
     }, {
-        title: 'file',
+        title: '文件',
         dataIndex: 'filename',
         key: 'filename',
     },{
-        title: 'status',
+        title: '状态',
         dataIndex: 'status',
         key: 'status',
+        render:(text,record)=>{
+            switch(record.status){
+                case 0:return <span>新增</span>;
+                case 1:return <span>已上线</span>;
+                case -1:return <span>已下线</span>;
+            }
+        }
     },{
         title: '描述',
         dataIndex: 'describe',
@@ -73,19 +80,19 @@ export default class Version extends React.Component {
                    onClick={()=>{
                        Actions.status({_id:record._id, status:1})
                    }}
-                >up</a>
+                >上线</a>
                 <Divider type={"vertical"} />
                 <a href={"javascript:;"}
                    onClick={()=>{
                        Actions.status({_id:record._id, status:-1})
                    }}
-                >down</a>
+                >下线</a>
                 <Divider type={"vertical"} />
                 <a href={"javascript:;"}
                    onClick={()=>{
                        Actions.remove({_id:record._id})
                    }}
-                >delete</a>
+                >删除</a>
             </span>
         )
     }];

@@ -72,6 +72,8 @@ def change():
     version = request.args.get('version')
     filename = request.args.get('filename')
 
+    path = '/home/parallels/abcd/'
+
     un_zip(local_models_path + filename, path)
 
     # 缺少一个停服务,启服务
@@ -105,6 +107,13 @@ def versions():
             if config[item['model']] == item['version'] :
                 item['current'] = True
 
+    list = []
+    for item in result['data']:
+        if item['status'] == 1:
+            list.append(item)
+
+    result['data'] = list
+
     print('result', result)
 
     return jsonify(result)
@@ -129,6 +138,6 @@ def cartwheel():
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0',port=4101)
+    app.run(host='0.0.0.0',port=4100)
 
 

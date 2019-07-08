@@ -45,7 +45,7 @@ class VersionInfo extends React.Component {
             if (!err) {
                 console.log('Received values of form: ', values);
                 values.filename = this.state.fileName;
-                values.path = `/root/${values.model}/models/`;
+                values.path = `/root/models/${values.model}/`;
                 Actions.create(values);
             }
         });

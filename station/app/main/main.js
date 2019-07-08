@@ -39,8 +39,6 @@ export class Main extends React.Component {
                 <div className="header" style={{background:'#fff'}}>
                     <img src="./static/logo.jpeg" style={{height:40}} />
                     <div className="logo" style={{color:'#000'}}>
-                        {/*<Avatar style={{marginRight: 8}}*/}
-                                {/*src=""/>*/}
                         高速公路智能车型识别系统
                     </div>
                     <Menu
@@ -59,19 +57,7 @@ export class Main extends React.Component {
                         <Menu.Item key="/main/version">
                             <Link to='/main/version'>版本管理</Link> 
                         </Menu.Item>
-                        {/*<Menu.Item key="1">*/}
-                            {/*<Link to='/main/face'>人脸识别</Link>*/}
-
-                        {/*</Menu.Item>*/}
-                        {/*<Menu.Item key="2">*/}
-                        {/*警务信息*/}
-                        {/*</Menu.Item>*/}
-                        {/*<Menu.Item key="3">*/}
-                            {/*<Link to='/main/business'>资源管理</Link>*/}
-                        {/*</Menu.Item>*/}
-                        {/*<Menu.Item key="4">*/}
-                            {/*<Link to='/main/system'>系统设置</Link> */}
-                        {/*</Menu.Item>*/}
+                        
                     </Menu>
 
                     {/*<div className='user'>*/}
