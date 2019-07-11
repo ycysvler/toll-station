@@ -45,6 +45,11 @@ export default class Monitor extends React.Component {
         dataIndex: 'ip',
         key: 'ip',
     },{
+        title:'车型接口版本',
+        width:130,
+        dataIndex:'vehicle_version',
+        key:'vehicle_version'
+    },{
         title: '车型接口',
         width:130,
         dataIndex: 'vehicle_status',
@@ -57,6 +62,12 @@ export default class Monitor extends React.Component {
             }
         }
     },{
+        title:'轴距接口版本',
+        width:130,
+        dataIndex:'cartwheel_version',
+        key:'cartwheel_version'
+    },
+        {
         title: '轴距接口',
         width:130,
         dataIndex: 'cartwheel_status',
@@ -84,10 +95,6 @@ export default class Monitor extends React.Component {
         title: '名称',
         dataIndex: 'name',
         key: 'name',
-    },{
-        title: '描述',
-        dataIndex: 'describe',
-        key: 'describe',
     }];
 
     render() {
@@ -101,7 +108,7 @@ export default class Monitor extends React.Component {
                             style={{ width: 240,marginLeft:5,marginRight:5 }}
                         />
 
-                        <Select defaultValue="" style={{ width: 120, marginLeft:5, marginRight:5 }}
+                        <Select defaultValue="" style={{ width: 120, marginLeft:135, marginRight:5 }}
                                 onChange={(value)=>{ console.log(value); this.state.v=value;this.refresh();}}
                         >
                             <Option value="">全部</Option>
@@ -110,7 +117,7 @@ export default class Monitor extends React.Component {
                             <Option value="-1">异常</Option>
                         </Select>
 
-                        <Select defaultValue="" style={{ width: 120, marginLeft:5, marginRight:5 }}
+                        <Select defaultValue="" style={{ width: 120, marginLeft:135, marginRight:5 }}
                                 onChange={(value)=>{ console.log(value); this.state.c=value;this.refresh();}}
                         >
                             <Option value="">全部</Option>

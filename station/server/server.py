@@ -87,6 +87,10 @@ def change():
 @app.route('/api/download')
 def download():
     filename = request.args.get('filename')
+    # 目录不存在，创建目录
+    if not os.path.exists(local_models_path):
+        os.makedirs(local_models_path)
+    # 下载文件
     download_big_file_with_wget(center_base + '/models/' + filename,local_models_path + filename)
     return jsonify({"code":200, "filename":filename})
 

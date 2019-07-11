@@ -64,7 +64,6 @@ def getStationVersion(id, ip):
         #http://localhost:4100/api/version
         res = requests.get('http://' + ip + ':4100/api/version')
     except Exception as e:
-        print(e)
         return False
     else:
         bean = json.loads(res.text)
@@ -76,7 +75,6 @@ def getStationVersion(id, ip):
 
 if __name__ == '__main__':
     run()
-    #getStationVersion('127.0.0.1')
 
 
 

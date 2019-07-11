@@ -108,7 +108,6 @@ class VersionInfo extends React.Component {
                                 })(<Select >
                                     <Option key={"vehicle"}>车型</Option>
                                     <Option key={"cartwheel"}>轴距</Option>
-                                    <Option key={"detectBlur"}>质量</Option>
                                 </Select>)}
                             </FormItem>
 
