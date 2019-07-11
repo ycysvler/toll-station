@@ -88,14 +88,6 @@ export default class Monitor extends React.Component {
         title: '描述',
         dataIndex: 'describe',
         key: 'describe',
-    }, {
-        title: 'action',
-        key: 'action',
-        render:(text,record)=>(
-            <span>
-
-            </span>
-        )
     }];
 
     render() {

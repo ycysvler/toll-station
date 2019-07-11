@@ -10,31 +10,15 @@ import bson.binary
 
 from bson.objectid import ObjectId
 
-# 批量计算特征
-# status = 0 的计算
-def batchFeature():
-    faces = mongodb.db('').faces.find({'status': 0})
-    for face in faces:
-        #print 'batch feature > ', '\033[1;32m ' + str(face["_id"]) + ' \033[0m'
-        # 图片路径
-        imagepath = 'temp/' + str(face['_id']) + '.jpg'
-        file = open(imagepath, 'wb')
-        file.write(face['source'])
-        file.close()
-        # 计算特征
-        code,feature = getFeature(imagepath)
-        # 删除临时图片
-        os.remove(imagepath)
-        if code > 0:
-            mongodb.db('').faces.update({'_id': face["_id"]},{'$set': {'status': 1, 'feature': feature}})
-
 
 def run():
     for station in mongodb.db('').stations.find({}):
         ip = station['ip']
-        vehicle_result = test(ip, "4000", "vehicle")
-        cartwheel_result = test(ip, "4001", "cartwheel")
-        blur_result = test(ip, "4002", "blur")
+
+        # 检查一下接口能不能调用通
+        vehicle_result = postImage(ip, "4000", "vehicle")
+        cartwheel_result = postImage(ip, "4001", "cartwheel")
+        blur_result = postImage(ip, "4002", "blur")
 
         print(ip, '\tvehicle:',vehicle_result, '\tcartwheel:',cartwheel_result, '\tblur:',blur_result)
 
@@ -53,7 +37,10 @@ def run():
         else:
             mongodb.db('').stations.update({'_id':station['_id']},{'$set':{'blur_status':-1}})
 
-def test(ip, port, type):
+        # 检查一下客户端在使用的版本
+        getStationVersion(station['_id'], ip)
+
+def postImage(ip, port, type):
     files = {"image":open("./"+type+".jpg", "rb")}
     try:
         res = requests.post('http://'+ip+':' + port +'/upload',None,files=files)
@@ -69,10 +56,27 @@ def test(ip, port, type):
         else:
             return True
 
-if __name__ == '__main__':
-    #batchFeature()
-    run()
+def getStationVersion(id, ip):
 
+    stations = mongodb.db('').stations
+
+    try:
+        #http://localhost:4100/api/version
+        res = requests.get('http://' + ip + ':4100/api/version')
+    except Exception as e:
+        print(e)
+        return False
+    else:
+        bean = json.loads(res.text)
+        if bean['error_code'] == 0:
+            for item in bean['data']:
+                if 'current' in item and item['current']:
+                    stations.update({'_id':id},{'$set':{item['model'] + '_version':item['version']}})
+                    print(item['model'], item['version'])
+
+if __name__ == '__main__':
+    run()
+    #getStationVersion('127.0.0.1')
 
 
 
