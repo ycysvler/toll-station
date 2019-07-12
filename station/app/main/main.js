@@ -6,6 +6,7 @@ import {HashRouter as Router, Route, Link, Switch, Redirect} from 'react-router-
 import moment from 'moment';
 import Version from '../version';
 import Test from '../test';
+import Register from '../register/index'
 import {Layout, Badge, Dropdown, Button, Divider, notification, Menu, message, Modal, Avatar, Row, Col} from 'antd';
 import {NotFound} from '../notfound';
 
@@ -57,30 +58,18 @@ export class Main extends React.Component {
                         <Menu.Item key="/main/version">
                             <Link to='/main/version'>版本管理</Link> 
                         </Menu.Item>
-                        
+                        <Menu.Item key="/main/register">
+                            <Link to='/main/register'>注册服务</Link>
+                        </Menu.Item>
                     </Menu>
 
-                    {/*<div className='user'>*/}
-                        {/*<div>*/}
-                            {/*<Avatar style={{marginRight: 8}}*/}
-                                    {/*src={""}/>*/}
-
-                        {/*</div>*/}
-                        {/*<div style={{marginRight: 16}}>*/}
-                            {/*{sessionStorage.getItem('user') ? JSON.parse(sessionStorage.getItem('user')).employeeDto.name : '袁洋'}*/}
-                        {/*</div>*/}
-                        {/*<div className='bar'>*/}
-                            {/*<Divider type="vertical"/>*/}
-                            {/*<a href="javascript:open('/vsb/', '_self').close();"*/}
-                               {/*style={{color: "#999", cursor: 'pointer'}}>退出</a>*/}
-                        {/*</div>*/}
-                    {/*</div>*/}
                 </div>
                 <Layout>
                     <Router>
                         <Switch>
                             <Route path="/main/version" component={Version}/>
                             <Route path="/main/test" component={Test}/>
+                            <Route path="/main/register" component={Register}/>
                             <Route component={NotFound}/>
                         </Switch>
                     </Router>

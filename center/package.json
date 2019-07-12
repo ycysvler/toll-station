@@ -6,7 +6,8 @@
   "scripts": {
     "debug": "(set NODE_ENV=development) && webpack -w",
     "release": "(set NODE_ENV=production) && webpack -w",
-    "server": "nodemon server/server.js"
+    "server": "nodemon server/server.js",
+    "dev": "node server/server.js"
   },
   "keywords": [],
   "author": "",

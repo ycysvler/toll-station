@@ -15,7 +15,7 @@ import zipfile
 import requests
 import json
 import subprocess
-from config import center_base,local_root_path,local_models_path
+from config import local_root_path,local_models_path
 
 sys.path.append('./util')
 
@@ -86,18 +86,31 @@ def change():
 
 @app.route('/api/download')
 def download():
+    cfg = load_config()
+
     filename = request.args.get('filename')
     # 目录不存在，创建目录
     if not os.path.exists(local_models_path):
         os.makedirs(local_models_path)
     # 下载文件
-    download_big_file_with_wget(center_base + '/models/' + filename,local_models_path + filename)
+    download_big_file_with_wget(cfg['center_base'] + '/models/' + filename,local_models_path + filename)
     return jsonify({"code":200, "filename":filename})
+
+
+@app.route('/api/register')
+def register():
+    ip = request.args.get('ip')
+    cfg = load_config()
+    cfg['center_base'] = "http://" + ip + ":4101"
+    json.dump(cfg,open(cfg_file,'w'), indent=4)
+
+    return jsonify({"code":200,"ip":ip})
 
 @app.route('/api/version')
 def versions():
-    result = requests.get(center_base + '/api/version').json()
     config = load_config()
+
+    result = requests.get(config['center_base'] + '/api/version').json()
 
     for item in result['data']:
         # check model file is exist
