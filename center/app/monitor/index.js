@@ -3,6 +3,7 @@
  */
 import React from 'react';
 import { Layout,Tag, Select ,Switch,Icon,Table ,Input} from 'antd';
+import {Link} from 'react-router-dom';
 import {Actions, Store} from '../reflux/station';
 const { Search } = Input;
 const { Option } = Select;
@@ -44,8 +45,11 @@ export default class Monitor extends React.Component {
         width:250,
         dataIndex: 'ip',
         key: 'ip',
+        render:(text, record)=>{
+            return <Link to={`/main/remote/${text}`}>{text}</Link>
+        }
     },{
-        title:'车型接口版本',
+        title:'车型模型版本',
         width:130,
         dataIndex:'vehicle_version',
         key:'vehicle_version'
@@ -62,7 +66,7 @@ export default class Monitor extends React.Component {
             }
         }
     },{
-        title:'轴距接口版本',
+        title:'轴距模型版本',
         width:130,
         dataIndex:'cartwheel_version',
         key:'cartwheel_version'
@@ -80,6 +84,9 @@ export default class Monitor extends React.Component {
             }
         }
     },{
+            title:'模糊模型版本',
+            width:130,
+        },{
         title: '模糊接口',
         width:130,
         dataIndex: 'blur_status',
@@ -95,7 +102,11 @@ export default class Monitor extends React.Component {
         title: '名称',
         dataIndex: 'name',
         key: 'name',
-    }];
+    }, {
+            title: '描述',
+            dataIndex: 'describe',
+            key: 'describe',
+        }];
 
     render() {
         return (
@@ -126,7 +137,7 @@ export default class Monitor extends React.Component {
                             <Option value="-1">异常</Option>
                         </Select>
 
-                        <Select defaultValue="" style={{ width: 120, marginLeft:5, marginRight:5 }}
+                        <Select defaultValue="" style={{ width: 120, marginLeft:135, marginRight:5 }}
                                 onChange={(value)=>{ console.log(value); this.state.b=value;this.refresh();}}
                         >
                             <Option value="">全部</Option>

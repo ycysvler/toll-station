@@ -5,7 +5,7 @@ import {
     Button, Row, Col, Icon, Tooltip,
     Form, Layout, Input, AutoComplete,
     Select,
-    Breadcrumb,  message
+    Breadcrumb, message
 } from "antd";
 
 const FormItem = Form.Item;
@@ -17,18 +17,35 @@ class Register extends React.Component {
         super(props);
         this.state = {visible: props.showModal};
         this.unsubscribe = Store.listen(this.onStatusChange.bind(this));
+
+        // 获取当前序列号
+        Actions.serial();
     }
 
     componentWillUnmount() {
         this.unsubscribe();
     }
 
-    componentWillReceiveProps(next){
-        this.setState({visible:next.showModal});
+    componentWillReceiveProps(next) {
+        this.setState({visible: next.showModal});
     }
 
     onStatusChange = (type, data) => {
         switch (type) {
+            case "checkPwd":
+                console.log('checkPwd', data);
+                if(data.code === 403){
+                    message.warning('注册码不正确！');
+                    this.setState({verify:false});
+                }
+                if(data.code === 200){
+                    this.setState({verify:true});
+                }
+
+                break;
+            case "serial":
+                this.setState({'serial': data});
+                break;
             case "register":
                 message.success('注册成功！');
                 break;
@@ -36,6 +53,8 @@ class Register extends React.Component {
     };
     handleSubmit = (e) => {
         e.preventDefault();
+
+
 
         this.props.form.validateFields((err, values) => {
 
@@ -53,18 +72,18 @@ class Register extends React.Component {
     render() {
         let self = this;
 
-        const { getFieldDecorator,getFieldValue, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
+        const {getFieldDecorator, getFieldValue, getFieldsError, getFieldError, isFieldTouched} = this.props.form;
 
         const formItemLayout = {
-              labelCol: {
-                xs: { span: 24 },
-                sm: { span: 8 },
-              },
-              wrapperCol: {
-                xs: { span: 24 },
-                sm: { span: 16 },
-              },
-            };
+            labelCol: {
+                xs: {span: 24},
+                sm: {span: 8},
+            },
+            wrapperCol: {
+                xs: {span: 24},
+                sm: {span: 16},
+            },
+        };
 
         const submitFormLayout = {
             wrapperCol: {
@@ -74,65 +93,92 @@ class Register extends React.Component {
         };
 
         const tailFormItemLayout = {
-              wrapperCol: {
+            wrapperCol: {
                 xs: {
-                  span: 24,
-                  offset: 0,
+                    span: 24,
+                    offset: 0,
                 },
                 sm: {
-                  span: 16,
-                  offset: 8,
+                    span: 16,
+                    offset: 8,
                 },
-              },
-            };
+            },
+        };
 
         return <div>
             <div className={'antd-pro-components-page-header-wrapper-index-content'}>
-                <Form {...formItemLayout}  ref={"form"}
-                                            onSubmit={this.handleSubmit} hideRequiredMark style={{marginTop: 8, width:800,margin:'0 auto'}}>
-                                            <FormItem {...formItemLayout} label="IP：">
-                                                {getFieldDecorator('ip', {
-                                                    rules: [
-                                                        {
-                                                            required: true,
-                                                            message: "请输中心IP!",
-                                                        },
-                                                    ],
-                                                })(<Input placeholder="请输中心IP！"/>)}
-                                            </FormItem>
+                <Form {...formItemLayout} ref={"form"}
+                      onSubmit={this.handleSubmit} hideRequiredMark
+                      style={{marginTop: 8, width: 800, margin: '0 auto'}}>
+                    <FormItem {...formItemLayout} label="序列号">
+                        {this.state.serial}
+                    </FormItem>
 
-                                            <FormItem {...formItemLayout} label="本站名称">
-                                                {getFieldDecorator('name', {
-                                                    rules: [
-                                                        {
-                                                            required: true,
-                                                            message: "本站名称是必填项",
-                                                        },
-                                                    ],
-                                                })(
-                                                    <Input placeholder="请输本站名称！"/>
-                                                )}
-                                            </FormItem>
+                    <FormItem {...formItemLayout} label="注册码">
+                        {getFieldDecorator('password', {
+                            rules: [
+                                {
+                                    required: true,
+                                    message: "注册码是必填项",
+                                },
+                            ],
+                        })(
+                            <Input onChange={
+                                (e)=>{
+                                    let value = e.currentTarget.value;
+                                    if(value.length > 30)
+                                        Actions.checkPwd(e.currentTarget.value);
+                                }
+                            } placeholder="请输入注册码！"/>
+                        )}
+                    </FormItem>
+                    <FormItem {...formItemLayout} label="IP：">
+                        {getFieldDecorator('ip', {
+                            rules: [
+                                {
+                                    required: true,
+                                    message: "中心IP是必填项",
+                                },
+                            ],
+                        })(<Input placeholder="请输中心IP！"/>)}
+                    </FormItem>
 
-                                            <FormItem {...formItemLayout} label="描述">
-                                                {getFieldDecorator('describe', {
-                                                    rules: [
-                                                        {
-                                                            required: false,
-                                                            message: "描述是必填项",
-                                                        },
-                                                    ],
-                                                })(
-                                                    <Input placeholder="请输入描述地址！"/>
-                                                )}
-                                            </FormItem>
+                    <FormItem {...formItemLayout} label="本站名称">
+                        {getFieldDecorator('name', {
+                            rules: [
+                                {
+                                    required: true,
+                                    message: "本站名称是必填项",
+                                },
+                            ],
+                        })(
+                            <Input placeholder="请输本站名称！"/>
+                        )}
+                    </FormItem>
 
-                                            <FormItem {...tailFormItemLayout}>
-                                                <Button type="primary" htmlType="submit">
-                                                            注册
-                                                          </Button>
-                                            </FormItem>
-                                        </Form>
+                    <FormItem {...formItemLayout} label="描述">
+                        {getFieldDecorator('describe', {
+                            rules: [
+                                {
+                                    required: false,
+                                    message: "描述是必填项",
+                                },
+                            ],
+                        })(
+                            <Input placeholder="请输入描述地址！"/>
+                        )}
+                    </FormItem>
+
+
+
+                    <FormItem {...tailFormItemLayout}>
+                        <Button type="primary"
+                                disabled={this.state.verify?false:true}
+                                htmlType="submit">
+                            注册
+                        </Button>
+                    </FormItem>
+                </Form>
             </div>
         </div>
     }

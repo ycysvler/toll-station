@@ -11,10 +11,12 @@
 
 import os
 import sys
+import uuid
 import zipfile
 import requests
 import json
 import subprocess
+import hashlib
 from config import local_root_path,local_models_path
 
 sys.path.append('./util')
@@ -96,10 +98,30 @@ def download():
     download_big_file_with_wget(cfg['center_base'] + '/models/' + filename,local_models_path + filename)
     return jsonify({"code":200, "filename":filename})
 
+@app.route('/api/serial')
+def serial():
+    sn = serialNumber()
+    return jsonify({"code":200,"sn":sn})
+
+@app.route('/api/verify')
+def checkPwd():
+    sn = serialNumber()
+    pwd = request.args.get('pwd')
+    if pwd == getPwd(sn):
+        return jsonify({"code":200})
+    else:
+        return jsonify({"code":403})
+
+@app.route('/api/getpwd')
+def adminPwd():
+    sn = serialNumber()
+    pwd = getPwd(sn)
+    return jsonify({"code":200,"pwd":pwd})
 
 @app.route('/api/register')
 def register():
     ip = request.args.get('ip')
+
     cfg = load_config()
     cfg['center_base'] = "http://" + ip + ":4101"
     json.dump(cfg,open(cfg_file,'w'), indent=4)
@@ -152,9 +174,61 @@ def cartwheel():
     items = list(mongodb.db().t_cartwheel.find({},{"_id":0}).limit(30))
     return jsonify(items)
 
+def serialNumber():
+    sn = ""
 
+    path = "./sn"
+    if os.path.exists(path):
+        f = open(path)
+        sn = f.read()
+        f.close()
+    else:
+        f1 = open(path,'w')
+        sn = str(uuid.uuid1())
+        print('sn', sn)
+        f1.write(sn)
+        f1.close()
+    return sn
+
+def getPwd(sn):
+    sn = sn + "-see-object"
+    hash_md5 = hashlib.md5(sn.encode("utf8"))
+    return str(hash_md5.hexdigest())
+
+def savePwd(pwd):
+    path = "./pwd"
+    f = open(path, 'w')
+    f.write(pwd)
+    f.close()
+
+def readPwd():
+    result = ""
+    path = "./pwd"
+    if os.path.exists(path):
+        f = open(path)
+        result = f.read()
+        f.close()
+
+    return result
+
+def verify(sn):
+    # 读取密码
+    pwd = readPwd()
+    # 加密sn,比较密码
+    if pwd == getPwd(sn):
+        return True
+    else:
+        return False
 
 if __name__ == "__main__":
+    '''
+    sn = serialNumber()
+    print('sn',sn)
+    pwd = getPwd(sn)
+    #savePwd(pwd)
+    print('pwd', pwd)
+    print('verify', verify(sn))
+    '''
     app.run(host='0.0.0.0',port=4100)
 
 

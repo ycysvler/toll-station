@@ -56,9 +56,7 @@ def postImage(ip, port, type):
             return True
 
 def getStationVersion(id, ip):
-
     stations = mongodb.db('').stations
-
     try:
         #http://localhost:4100/api/version
         res = requests.get('http://' + ip + ':4100/api/version')
@@ -75,11 +73,34 @@ def getStationVersion(id, ip):
                     stations.update({'_id':id},{'$set':{item['model'] + '_version':item['version']}})
                     print(item['model'], item['version'])
 
+''' 获取CPU的型号和CPU的核心数 '''
+def getCpu():
+    num = 0
+    with open('/proc/cpuinfo') as fd:
+        for line in fd:
+            if line.startswith('processor'):
+                num += 1
+            if line.startswith('model name'):
+                cpu_model = line.split(':')[1].strip().split()
+                cpu_model = cpu_model[0] + ' ' + cpu_model[2]  + ' ' + cpu_model[-1]
+
+    print(num, cpu_model)
+    return {'cpu_num':num, 'cpu_model':cpu_model}
+
+def test():
+    cmd = "/usr/sbin/system_profiler SPHardwareDataType | fgrep 'Serial' | awk '{print $NF}'"
+    output = os.popen(cmd)
+    print(output.read())
+
 if __name__ == '__main__':
+    #getCpu()
+    test()
+
+    '''     
     while True:
         run()
         time.sleep(60)
-
+    '''
 
 
 

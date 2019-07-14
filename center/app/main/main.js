@@ -7,6 +7,7 @@ import moment from 'moment';
 import Version from '../version';
 import Station from '../station';
 import Monitor from '../monitor';
+import Remote from '../remote';
 import {Layout, Badge, Dropdown, Button, Divider, notification, Menu, message, Modal, Avatar, Row, Col} from 'antd';
 import {NotFound} from '../notfound';
 
@@ -84,6 +85,7 @@ export class Main extends React.Component {
                             <Route path="/main/version" component={Version}/>
                             <Route path="/main/station" component={Station}/>
                             <Route path="/main/monitor" component={Monitor}/>
+                            <Route path="/main/remote/:ip" component={Remote}/>
 
                             <Route component={NotFound}/>
                         </Switch>

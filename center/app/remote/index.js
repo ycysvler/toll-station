@@ -4,18 +4,16 @@
 import React from 'react';
 import {HashRouter as Router, Route, Link, Switch, Redirect} from 'react-router-dom';
 import {Layout, Menu, Divider, Icon, Button, Table, Spin} from 'antd';
-import VersionInfo from './info';
-import {Actions, Store} from '../reflux';
+import {Actions, Store} from '../reflux/remote';
 
 const {Header, Footer, Sider, Content} = Layout;
 const SubMenu = Menu.SubMenu;
 
-export default class Version extends React.Component {
+export default class Remote extends React.Component {
     constructor(props) {
         super(props);
-
         this.unsubscribe = Store.listen(this.onStatusChange.bind(this));
-        this.state = {list: []};
+        this.state = {ip:props.match.params.ip, list: []};
 
     }
 
@@ -43,7 +41,7 @@ export default class Version extends React.Component {
 
     refresh = () => {
         this.setState({modal: false});
-        Actions.list();
+        Actions.list(this.state.ip);
     };
 
     columns = [{
@@ -129,7 +127,6 @@ export default class Version extends React.Component {
 
                     <Table bordered rowKey="_id" dataSource={this.state.list} columns={this.columns}/>
 
-                    <VersionInfo refresh={this.refresh} showModal={this.state.modal}/>
                 </Layout>
             </Layout>
         );
