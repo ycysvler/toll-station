@@ -10,7 +10,6 @@ import bson.binary
 
 from bson.objectid import ObjectId
 
-
 def run():
     for station in mongodb.db('').stations.find({}):
         ip = station['ip']
@@ -66,6 +65,9 @@ def getStationVersion(id, ip):
     except Exception as e:
         return False
     else:
+        if res.status_code != 200:
+            print(ip, '\tversion:',res.status_code)
+            return False
         bean = json.loads(res.text)
         if bean['error_code'] == 0:
             for item in bean['data']:
@@ -74,7 +76,9 @@ def getStationVersion(id, ip):
                     print(item['model'], item['version'])
 
 if __name__ == '__main__':
-    run()
+    while True:
+        run()
+        time.sleep(60)
 
 
 
