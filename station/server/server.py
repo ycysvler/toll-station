@@ -161,23 +161,31 @@ def versions():
 
 @app.route('/api/test/detectblur')
 def detectblur():
-    items =list( mongodb.db().t_detectblur.find({},{"_id":0}).limit(30))
-    return jsonify(items)
+    if verifyed:
+        items =list( mongodb.db().t_detectblur.find({},{"_id":0}).limit(30))
+        return jsonify(items)
+    else:
+        return jsonify({"code":"401", "error":"服务未激活，请在注册页面通过注册码激活"})
 
 @app.route('/api/test/vehicle')
 def vehicle():
-    items = list(mongodb.db().t_vehicle.find({},{"_id":0}).limit(30))
-    return jsonify(items)
+    if verifyed:
+        items = list(mongodb.db().t_vehicle.find({},{"_id":0}).limit(30))
+        return jsonify(items)
+    else:
+        return jsonify({"code":"401", "error":"服务未激活，请在注册页面通过注册码激活"})
 
 @app.route('/api/test/cartwheel')
 def cartwheel():
-    items = list(mongodb.db().t_cartwheel.find({},{"_id":0}).limit(30))
-    return jsonify(items)
+    if verifyed:
+        items = list(mongodb.db().t_cartwheel.find({},{"_id":0}).limit(30))
+        return jsonify(items)
+    else:
+        return jsonify({"code":"401", "error":"服务未激活，请在注册页面通过注册码激活"})
 
 def serialNumber():
     sn = ""
-
-    path = "./sn"
+    path = "/dev/sn"
     if os.path.exists(path):
         f = open(path)
         sn = f.read()
@@ -195,21 +203,21 @@ def getPwd(sn):
     hash_md5 = hashlib.md5(sn.encode("utf8"))
     return str(hash_md5.hexdigest())
 
-def savePwd(pwd):
-    path = "./pwd"
-    f = open(path, 'w')
-    f.write(pwd)
-    f.close()
-
 def readPwd():
     result = ""
-    path = "./pwd"
+    path = "/dev/pwd"
     if os.path.exists(path):
         f = open(path)
         result = f.read()
         f.close()
 
     return result
+
+def savePwd(pwd):
+    path = "/dev/pwd"
+    f = open(path, 'w')
+    f.write(pwd)
+    f.close()
 
 def verify(sn):
     # 读取密码
@@ -220,15 +228,13 @@ def verify(sn):
     else:
         return False
 
+verifyed = False
+
 if __name__ == "__main__":
-    '''
     sn = serialNumber()
-    print('sn',sn)
     pwd = getPwd(sn)
-    #savePwd(pwd)
-    print('pwd', pwd)
-    print('verify', verify(sn))
-    '''
+    verifyed = verify(sn)
+
     app.run(host='0.0.0.0',port=4100)
 
 
