@@ -21,8 +21,6 @@ from config import local_root_path,local_models_path
 
 sys.path.append('./util')
 
-import mongodb
-
 from flask import Flask, abort, request,jsonify,render_template
 from flask_cors import CORS
 
@@ -74,8 +72,6 @@ def change():
     version = request.args.get('version')
     filename = request.args.get('filename')
 
-    path = '/home/parallels/abcd/'
-
     un_zip(local_models_path + filename, path)
 
     # 缺少一个停服务,启服务
@@ -108,6 +104,7 @@ def checkPwd():
     sn = serialNumber()
     pwd = request.args.get('pwd')
     if pwd == getPwd(sn):
+        savePwd(pwd)
         return jsonify({"code":200})
     else:
         return jsonify({"code":403})
@@ -158,7 +155,7 @@ def versions():
     return jsonify(result)
     # 返回所有版本，本地有没有压缩包，正在使用的版本
     #return jsonify([{"version":"1.0","local":False, "current":False},{"version":"2.0","local":True, "current":True}])
-
+'''
 @app.route('/api/test/detectblur')
 def detectblur():
     if verifyed:
@@ -182,10 +179,10 @@ def cartwheel():
         return jsonify(items)
     else:
         return jsonify({"code":"401", "error":"服务未激活，请在注册页面通过注册码激活"})
-
+'''
 def serialNumber():
     sn = ""
-    path = "/dev/sn"
+    path = "/usr/sn"
     if os.path.exists(path):
         f = open(path)
         sn = f.read()
@@ -205,7 +202,7 @@ def getPwd(sn):
 
 def readPwd():
     result = ""
-    path = "/dev/pwd"
+    path = "/usr/pwd"
     if os.path.exists(path):
         f = open(path)
         result = f.read()
@@ -214,7 +211,7 @@ def readPwd():
     return result
 
 def savePwd(pwd):
-    path = "/dev/pwd"
+    path = "/usr/pwd"
     f = open(path, 'w')
     f.write(pwd)
     f.close()
