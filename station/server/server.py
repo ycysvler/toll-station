@@ -155,31 +155,14 @@ def versions():
     return jsonify(result)
     # 返回所有版本，本地有没有压缩包，正在使用的版本
     #return jsonify([{"version":"1.0","local":False, "current":False},{"version":"2.0","local":True, "current":True}])
-'''
-@app.route('/api/test/detectblur')
-def detectblur():
-    if verifyed:
-        items =list( mongodb.db().t_detectblur.find({},{"_id":0}).limit(30))
-        return jsonify(items)
-    else:
-        return jsonify({"code":"401", "error":"服务未激活，请在注册页面通过注册码激活"})
 
-@app.route('/api/test/vehicle')
-def vehicle():
-    if verifyed:
-        items = list(mongodb.db().t_vehicle.find({},{"_id":0}).limit(30))
-        return jsonify(items)
-    else:
-        return jsonify({"code":"401", "error":"服务未激活，请在注册页面通过注册码激活"})
+# 计算本机秘钥
+def getPwd(sn):
+    sn = sn + "-see-object"
+    hash_md5 = hashlib.md5(sn.encode("utf8"))
+    return str(hash_md5.hexdigest())
 
-@app.route('/api/test/cartwheel')
-def cartwheel():
-    if verifyed:
-        items = list(mongodb.db().t_cartwheel.find({},{"_id":0}).limit(30))
-        return jsonify(items)
-    else:
-        return jsonify({"code":"401", "error":"服务未激活，请在注册页面通过注册码激活"})
-'''
+# uuid 本机SN
 def serialNumber():
     sn = ""
     path = "/usr/sn"
@@ -195,11 +178,7 @@ def serialNumber():
         f1.close()
     return sn
 
-def getPwd(sn):
-    sn = sn + "-see-object"
-    hash_md5 = hashlib.md5(sn.encode("utf8"))
-    return str(hash_md5.hexdigest())
-
+# 读取秘钥
 def readPwd():
     result = ""
     path = "/usr/pwd"
@@ -207,15 +186,16 @@ def readPwd():
         f = open(path)
         result = f.read()
         f.close()
-
     return result
 
+# 保存秘钥
 def savePwd(pwd):
     path = "/usr/pwd"
     f = open(path, 'w')
     f.write(pwd)
     f.close()
 
+# 验证秘钥
 def verify(sn):
     # 读取密码
     pwd = readPwd()

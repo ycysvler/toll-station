@@ -93,7 +93,6 @@ const Store = Reflux.createStore({
             credentials: "include"
         }).then(response => {
             response.json().then(function (data) {
-                self.onSetCenterIp(ip);
                 self.trigger('register', data);
             });
         }).catch(error => {

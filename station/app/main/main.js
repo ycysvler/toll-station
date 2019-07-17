@@ -6,7 +6,8 @@ import {HashRouter as Router, Route, Link, Switch, Redirect} from 'react-router-
 import moment from 'moment';
 import Version from '../version';
 import Test from '../test';
-import Register from '../register/index'
+import Register from '../register/index';
+import Serial from '../serial/index';
 import {Layout, Badge, Dropdown, Button, Divider, notification, Menu, message, Modal, Avatar, Row, Col} from 'antd';
 import {NotFound} from '../notfound';
 
@@ -59,8 +60,12 @@ export class Main extends React.Component {
                             <Link to='/main/version'>版本管理</Link> 
                         </Menu.Item>
                         <Menu.Item key="/main/register">
-                            <Link to='/main/register'>注册服务</Link>
+                            <Link to='/main/register'>上报中心</Link>
                         </Menu.Item>
+                        <Menu.Item key="/main/serial">
+                                                    <Link to='/main/serial'>注册服务</Link>
+                                                </Menu.Item>
+
                     </Menu>
 
                 </div>
@@ -70,6 +75,8 @@ export class Main extends React.Component {
                             <Route path="/main/version" component={Version}/>
                             <Route path="/main/test" component={Test}/>
                             <Route path="/main/register" component={Register}/>
+                            <Route path="/main/serial" component={Serial}/>
+
                             <Route component={NotFound}/>
                         </Switch>
                     </Router>
