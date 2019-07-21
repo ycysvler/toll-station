@@ -7,6 +7,7 @@ const Actions = Reflux.createActions([
         'download',
         'register',
         'serial',
+        'secret',
         'checkPwd',
         'setCenterIp'
     ]
@@ -20,15 +21,34 @@ const Store = Reflux.createStore({
 
     listenables: [Actions],
 
+    onSecret(secret){
+    let self = this;
+            let url = Config.dongle + '/secret?secret=' + secret['password'];
+            fetch(url, {
+                method: "get",
+
+            }).then(response => {
+                response.json().then(function (data) {
+                    self.trigger('secret', data.message);
+                });
+            }).catch(error => {
+                if (error.response) {
+                    cb(null, error.message, error.response.status);
+                } else {
+                    cb(null, error.message, 500);
+                }
+            });
+    },
+
     onSerial() {
         let self = this;
-        let url = Config.base + '/api/serial';
+        let url = Config.dongle + '/serial';
         fetch(url, {
             method: "get",
 
         }).then(response => {
             response.json().then(function (data) {
-                self.trigger('serial', data.sn);
+                self.trigger('serial', data.message);
             });
         }).catch(error => {
             if (error.response) {

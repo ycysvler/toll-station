@@ -32,21 +32,10 @@ class Register extends React.Component {
 
     onStatusChange = (type, data) => {
         switch (type) {
-            case "checkPwd":
-                console.log('checkPwd', data);
-                if(data.code === 403){
-                    message.warning('注册码不正确！');
-                    this.setState({verify:false});
-                }
-                if(data.code === 200){
-                    this.setState({verify:true});
-                }
-
-                break;
             case "serial":
                 this.setState({'serial': data});
                 break;
-            case "register":
+            case "secret":
                 message.success('注册成功！');
                 break;
         }
@@ -58,7 +47,7 @@ class Register extends React.Component {
 
             if (!err) {
                 console.log('Received values of form: ', values);
-                Actions.register(values);
+                Actions.secret(values);
             }
         });
     };
@@ -121,19 +110,13 @@ class Register extends React.Component {
                                 },
                             ],
                         })(
-                            <Input onChange={
-                                (e)=>{
-                                    let value = e.currentTarget.value;
-                                    if(value.length > 30)
-                                        Actions.checkPwd(e.currentTarget.value);
-                                }
-                            } placeholder="请输入注册码！"/>
+                            <Input   placeholder="请输入注册码！"/>
                         )}
                     </FormItem>
 
                     <FormItem {...tailFormItemLayout}>
                         <Button type="primary"
-                                disabled={this.state.verify?false:true}
+
                                 htmlType="submit">
                             注册
                         </Button>
