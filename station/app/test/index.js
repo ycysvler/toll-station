@@ -238,7 +238,7 @@ export default class Test extends React.Component {
         return (
             <Layout>
 
-                <Layout style={{borderLeft: 'solid 1px #e8e8e8', padding: 16}}>
+                <Layout style={{ padding: 16}}>
 
                     <Tabs defaultActiveKey="1" onChange={this.callback}>
                         <TabPane tab="模糊测试" key="1">

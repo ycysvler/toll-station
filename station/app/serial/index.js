@@ -36,7 +36,12 @@ class Register extends React.Component {
                 this.setState({'serial': data});
                 break;
             case "secret":
-                message.success('注册成功！');
+                if(data.code === 200){
+                    message.success('注册成功！');
+                    Actions.verify();
+                }else{
+                    message.warning(data.message);
+                }
                 break;
         }
     };
@@ -92,7 +97,7 @@ class Register extends React.Component {
             },
         };
 
-        return <div>
+        return <div style={{ padding: 16}}>
             <div className={'antd-pro-components-page-header-wrapper-index-content'}>
                 <Form {...formItemLayout} ref={"form"}
                       onSubmit={this.handleSubmit} hideRequiredMark

@@ -8,7 +8,8 @@ import Version from '../version';
 import Test from '../test';
 import Register from '../register/index';
 import Serial from '../serial/index';
-import {Layout, Badge, Dropdown, Button, Divider, notification, Menu, message, Modal, Avatar, Row, Col} from 'antd';
+import {Store, Actions} from '../reflux/index';
+import {Layout, Badge, Dropdown, Button, Divider, Card, notification, Menu, message, Modal, Avatar, Row, Col} from 'antd';
 import {NotFound} from '../notfound';
 
 import './main.less';
@@ -27,16 +28,30 @@ export class Main extends React.Component {
         let menukey = '/main/monitor';
         menukey = url.length > 1 ? url[1] : menukey;
 
-        this.state = {hasNewMsg: false, menukey:menukey};
+        this.unsubscribe = Store.listen(this.onStatusChange.bind(this));
+
+        this.state = {hasNewMsg: false,verify:false, menukey:menukey};
+    }
+
+    componentDidMount(){
+        Actions.verify();
     }
 
     componentWillUnmount() {
-
+        this.unsubscribe();
     }
 
+    onStatusChange = (type, data) => {
+            switch (type) {
+                case "verify":
+                    if(data.code === 200){
+                        this.setState({verify:true})
+                    }
+                    break;
+            }
+        };
 
     render() {
-
         return (<Layout className="main">
                 <div className="header" style={{background:'#fff'}}>
                     <img src="./static/logo.jpeg" style={{height:40}} />
@@ -53,34 +68,32 @@ export class Main extends React.Component {
                         mode="horizontal"
                         
                     >
-                        <Menu.Item key="/main/test">
+                        {this.state.verify?<Menu.Item key="/main/test">
                             <Link to='/main/test'>接口测试</Link>
-                        </Menu.Item>
-                        <Menu.Item key="/main/version">
+                        </Menu.Item>:null}
+                        {this.state.verify?<Menu.Item key="/main/version">
                             <Link to='/main/version'>版本管理</Link> 
-                        </Menu.Item>
-                        <Menu.Item key="/main/register">
+                        </Menu.Item>:null}
+                        {this.state.verify?<Menu.Item key="/main/register">
                             <Link to='/main/register'>上报中心</Link>
-                        </Menu.Item>
-                        <Menu.Item key="/main/serial">
-                                                    <Link to='/main/serial'>注册服务</Link>
-                                                </Menu.Item>
-
+                        </Menu.Item>:null}
+                        {this.state.verify?null:<Menu.Item key="/main/serial">
+                            <Link to='/main/serial'>注册服务</Link>
+                        </Menu.Item>}
                     </Menu>
 
                 </div>
-                <Layout>
-                    <Router>
-                        <Switch>
-                            <Route path="/main/version" component={Version}/>
-                            <Route path="/main/test" component={Test}/>
-                            <Route path="/main/register" component={Register}/>
-                            <Route path="/main/serial" component={Serial}/>
-
-                            <Route component={NotFound}/>
-                        </Switch>
-                    </Router>
-                </Layout>
+                <Content>
+                        <Router>
+                            <Switch>
+                                <Route path="/main/version" component={Version}/>
+                                <Route path="/main/test" component={Test}/>
+                                <Route path="/main/register" component={Register}/>
+                                <Route path="/main/serial" component={Serial}/>
+                                <Route component={NotFound}/>
+                            </Switch>
+                        </Router>
+                </Content>
             </Layout>
         );
     }

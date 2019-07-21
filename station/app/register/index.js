@@ -18,8 +18,6 @@ class Register extends React.Component {
         this.state = {visible: props.showModal};
         this.unsubscribe = Store.listen(this.onStatusChange.bind(this));
 
-        // 获取当前序列号
-        Actions.serial();
     }
 
     componentWillUnmount() {
@@ -32,20 +30,6 @@ class Register extends React.Component {
 
     onStatusChange = (type, data) => {
         switch (type) {
-            case "checkPwd":
-                console.log('checkPwd', data);
-                if(data.code === 403){
-                    message.warning('注册码不正确！');
-                    this.setState({verify:false});
-                }
-                if(data.code === 200){
-                    this.setState({verify:true});
-                }
-
-                break;
-            case "serial":
-                this.setState({'serial': data});
-                break;
             case "register":
                 message.success('注册成功！');
                 break;
@@ -53,9 +37,6 @@ class Register extends React.Component {
     };
     handleSubmit = (e) => {
         e.preventDefault();
-
-
-
         this.props.form.validateFields((err, values) => {
 
             if (!err) {
@@ -105,33 +86,12 @@ class Register extends React.Component {
             },
         };
 
-        return <div>
+        return <div style={{ padding: 16}}>
             <div className={'antd-pro-components-page-header-wrapper-index-content'}>
                 <Form {...formItemLayout} ref={"form"}
                       onSubmit={this.handleSubmit} hideRequiredMark
                       style={{marginTop: 8, width: 800, margin: '0 auto'}}>
-                    <FormItem {...formItemLayout} label="序列号">
-                        {this.state.serial}
-                    </FormItem>
 
-                    <FormItem {...formItemLayout} label="注册码">
-                        {getFieldDecorator('password', {
-                            rules: [
-                                {
-                                    required: true,
-                                    message: "注册码是必填项",
-                                },
-                            ],
-                        })(
-                            <Input onChange={
-                                (e)=>{
-                                    let value = e.currentTarget.value;
-                                    if(value.length > 30)
-                                        Actions.checkPwd(e.currentTarget.value);
-                                }
-                            } placeholder="请输入注册码！"/>
-                        )}
-                    </FormItem>
                     <FormItem {...formItemLayout} label="IP：">
                         {getFieldDecorator('ip', {
                             rules: [

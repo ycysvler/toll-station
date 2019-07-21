@@ -3,23 +3,54 @@ import Config from 'config';
 
 const Actions = Reflux.createActions([
         'list',
+        'verify',
         'online',
         'download',
         'register',
         'serial',
         'secret',
         'checkPwd',
-        'setCenterIp'
+        'setCenterIp',
+
     ]
 );
 
 
 const Store = Reflux.createStore({
     state: {
-        admin: {}
+        verify:false
     },
 
     listenables: [Actions],
+
+    onVerify(){
+    let self = this;
+
+    if(this.state.verify){
+        self.trigger('verify', {code:200, message:"ok"});
+        return;
+    }
+
+
+    let url = `${Config.dongle}/verify`;
+                fetch(url, {
+                    method: "get",
+                }).then(response => {
+                    response.json().then(function (data) {
+                    if(data.code === 200){
+                        self.state.verify = true;
+                    }
+                    self.trigger('verify', data);
+
+                    });
+                }).catch(error => {
+                    if (error.response) {
+                        cb(null, error.message, error.response.status);
+                    } else {
+                        cb(null, error.message, 500);
+                    }
+                });
+    },
 
     onSecret(secret){
     let self = this;
@@ -29,7 +60,7 @@ const Store = Reflux.createStore({
 
             }).then(response => {
                 response.json().then(function (data) {
-                    self.trigger('secret', data.message);
+                    self.trigger('secret', data);
                 });
             }).catch(error => {
                 if (error.response) {

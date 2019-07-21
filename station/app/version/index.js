@@ -120,7 +120,7 @@ export default class Version extends React.Component {
         return (
             <Layout>
 
-                <Layout style={{borderLeft: 'solid 1px #e8e8e8', padding: 16}}>
+                <Layout style={{padding: 16}}>
                     {/*<div style={{paddingBottom: 16}}><Button icon="plus" type="primary" style={{marginRight:16}}*/}
                     {/*                                         onClick={() => {*/}
                     {/*                                             this.setState({"modal": true})*/}
