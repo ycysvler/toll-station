@@ -82,6 +82,7 @@ const Store = Reflux.createStore({
                 self.trigger('serial', data.message);
             });
         }).catch(error => {
+            console.log('error', error);
             if (error.response) {
                 cb(null, error.message, error.response.status);
             } else {

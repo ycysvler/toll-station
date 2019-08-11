@@ -94,27 +94,6 @@ def download():
     download_big_file_with_wget(cfg['center_base'] + '/models/' + filename,local_models_path + filename)
     return jsonify({"code":200, "filename":filename})
 
-@app.route('/api/serial')
-def serial():
-    sn = serialNumber()
-    return jsonify({"code":200,"sn":sn})
-
-@app.route('/api/verify')
-def checkPwd():
-    sn = serialNumber()
-    pwd = request.args.get('pwd')
-    if pwd == getPwd(sn):
-        savePwd(pwd)
-        return jsonify({"code":200})
-    else:
-        return jsonify({"code":403})
-
-@app.route('/api/getpwd')
-def adminPwd():
-    sn = serialNumber()
-    pwd = getPwd(sn)
-    return jsonify({"code":200,"pwd":pwd})
-
 @app.route('/api/register')
 def register():
     ip = request.args.get('ip')
@@ -149,68 +128,28 @@ def versions():
             list.append(item)
 
     result['data'] = list
-
-    print('result', result)
-
     return jsonify(result)
-    # 返回所有版本，本地有没有压缩包，正在使用的版本
-    #return jsonify([{"version":"1.0","local":False, "current":False},{"version":"2.0","local":True, "current":True}])
 
-# 计算本机秘钥
-def getPwd(sn):
-    sn = sn + "-see-object"
-    hash_md5 = hashlib.md5(sn.encode("utf8"))
-    return str(hash_md5.hexdigest())
-
-# uuid 本机SN
-def serialNumber():
-    sn = ""
-    path = "/usr/sn"
-    if os.path.exists(path):
-        f = open(path)
-        sn = f.read()
-        f.close()
-    else:
-        f1 = open(path,'w')
-        sn = str(uuid.uuid1())
-        print('sn', sn)
-        f1.write(sn)
-        f1.close()
-    return sn
-
-# 读取秘钥
-def readPwd():
-    result = ""
-    path = "/usr/pwd"
-    if os.path.exists(path):
-        f = open(path)
-        result = f.read()
-        f.close()
-    return result
-
-# 保存秘钥
-def savePwd(pwd):
-    path = "/usr/pwd"
-    f = open(path, 'w')
-    f.write(pwd)
-    f.close()
-
-# 验证秘钥
-def verify(sn):
-    # 读取密码
-    pwd = readPwd()
-    # 加密sn,比较密码
-    if pwd == getPwd(sn):
+def verify():
+    global verifyed
+    if verifyed:
         return True
     else:
-        return False
+        try:
+            res = requests.get("http://localhost:4587/verify")
+            json = res.json()
+            if json["code"] == 200:
+                verifyed = True
+                return True
+            else:
+                return False
+        except:
+            return False
 
 verifyed = False
 
 if __name__ == "__main__":
-    sn = serialNumber()
-    pwd = getPwd(sn)
-    verifyed = verify(sn)
+    verify()
 
     app.run(host='0.0.0.0',port=4100)
 
