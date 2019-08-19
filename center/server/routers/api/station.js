@@ -27,6 +27,7 @@ function getIP(req){
 }
 
 module.exports = function (router) {
+    // 注册
     router.post('/station', async(ctx) => {
         let ip = getIP(ctx.req);
 

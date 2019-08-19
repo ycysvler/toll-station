@@ -133,9 +133,7 @@ const Store = Reflux.createStore({
 
     onRegister(data) {
         let self = this;
-        let url = `http://${data.ip}:4101/api/station`;
-        let ip = data.ip;
-
+        let url = `${Config.base}/api/register`;
         fetch(url, {
             headers: {
                 "Content-Type": "application/json",

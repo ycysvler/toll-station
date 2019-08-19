@@ -31,16 +31,17 @@ class Register extends React.Component {
     onStatusChange = (type, data) => {
         switch (type) {
             case "register":
-                message.success('注册成功！');
+                if(data.code === 200)
+                    message.success('注册成功！');
+                else
+                    message.error(data.message);
                 break;
         }
     };
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
-
             if (!err) {
-                console.log('Received values of form: ', values);
                 Actions.register(values);
             }
         });
@@ -132,9 +133,7 @@ class Register extends React.Component {
 
 
                     <FormItem {...tailFormItemLayout}>
-                        <Button type="primary"
-                                disabled={this.state.verify?false:true}
-                                htmlType="submit">
+                        <Button type="primary"  htmlType="submit">
                             注册
                         </Button>
                     </FormItem>

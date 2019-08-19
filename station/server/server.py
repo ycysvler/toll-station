@@ -94,15 +94,38 @@ def download():
     download_big_file_with_wget(cfg['center_base'] + '/models/' + filename,local_models_path + filename)
     return jsonify({"code":200, "filename":filename})
 
-@app.route('/api/register')
+@app.route('/api/register', methods=['POST'])
 def register():
-    ip = request.args.get('ip')
-
+    data = str(request.data, encoding = "utf-8")
+    j_data =  json.loads(data)
+    ip =  j_data['ip']
     cfg = load_config()
     cfg['center_base'] = "http://" + ip + ":4101"
+    # 服务器IP保存到配置文件
     json.dump(cfg,open(cfg_file,'w'), indent=4)
 
-    return jsonify({"code":200,"ip":ip})
+    # 向服务器发起注册
+    try:
+        res = requests.post("http://" +ip + ':4101/api/station',
+                               data={"describe":j_data["describe"],"name":j_data["name"]},
+                               timeout=5)
+
+        result = res.json()
+
+        if result['error_code'] == 0:
+            return jsonify({"code":200})
+        else:
+            return jsonify({"code":500,"message":result["message"]})
+
+
+    except requests.exceptions.ConnectionError as e1:
+        return jsonify({"code":500,"message":"IP地址无法访问！"})
+
+
+
+
+
+
 
 @app.route('/api/version')
 def versions():

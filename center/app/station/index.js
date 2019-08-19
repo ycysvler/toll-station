@@ -63,7 +63,7 @@ export default class Station extends React.Component {
                    onClick={()=>{
                        Actions.remove({_id:record._id})
                    }}
-                >delete</a>
+                >删除</a>
             </span>
         )
     }];
