@@ -94,13 +94,12 @@ def test():
 
 if __name__ == '__main__':
     #getCpu()
-    test()
+    #test()
 
-    '''     
     while True:
         run()
         time.sleep(60)
-    '''
+
 
 
 
