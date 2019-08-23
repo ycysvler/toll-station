@@ -11,6 +11,7 @@ const Actions = Reflux.createActions([
         'secret',
         'checkPwd',
         'setCenterIp',
+        'message'
 
     ]
 );
@@ -44,11 +45,7 @@ const Store = Reflux.createStore({
 
                     });
                 }).catch(error => {
-                    if (error.response) {
-                        cb(null, error.message, error.response.status);
-                    } else {
-                        cb(null, error.message, 500);
-                    }
+                    this.onMessage('warning', "守护进程无法访问！");
                 });
     },
 
@@ -82,12 +79,7 @@ const Store = Reflux.createStore({
                 self.trigger('serial', data.message);
             });
         }).catch(error => {
-            console.log('error', error);
-            if (error.response) {
-                cb(null, error.message, error.response.status);
-            } else {
-                cb(null, error.message, 500);
-            }
+
         });
     },
 
@@ -109,6 +101,10 @@ const Store = Reflux.createStore({
             }
         });
 
+    },
+
+    onMessage(type, message){
+        this.trigger("message", {type:type, message:message});
     },
 
 

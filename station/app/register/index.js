@@ -15,7 +15,7 @@ const {Sider, Content} = Layout;
 class Register extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {visible: props.showModal};
+        this.state = {verify:Store.verify, visible: props.showModal};
         this.unsubscribe = Store.listen(this.onStatusChange.bind(this));
 
     }
@@ -30,6 +30,11 @@ class Register extends React.Component {
 
     onStatusChange = (type, data) => {
         switch (type) {
+            case "verify":
+                if(data.code === 200){
+                    this.setState({verify:true})
+                }
+                break;
             case "register":
                 if(data.code === 200)
                     message.success('注册成功！');
@@ -87,6 +92,7 @@ class Register extends React.Component {
             },
         };
 
+
         return <div style={{ padding: 16}}>
             <div className={'antd-pro-components-page-header-wrapper-index-content'}>
                 <Form {...formItemLayout} ref={"form"}
@@ -133,7 +139,7 @@ class Register extends React.Component {
 
 
                     <FormItem {...tailFormItemLayout}>
-                        <Button type="primary"  htmlType="submit">
+                        <Button type="primary" htmlType="submit">
                             注册
                         </Button>
                     </FormItem>

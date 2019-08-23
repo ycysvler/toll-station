@@ -2,6 +2,7 @@
  * Created by yanggang on 2017/3/6.
  */
 import React from 'react';
+import { hashHistory } from 'react-router';
 import {HashRouter as Router, Route, Link, Switch, Redirect} from 'react-router-dom';
 import moment from 'moment';
 import Version from '../version';
@@ -9,7 +10,7 @@ import Test from '../test';
 import Register from '../register/index';
 import Serial from '../serial/index';
 import {Store, Actions} from '../reflux/index';
-import {Layout, Badge, Dropdown, Button, Divider, Card, notification, Menu, message, Modal, Avatar, Row, Col} from 'antd';
+import {Layout,  message, Menu} from 'antd';
 import {NotFound} from '../notfound';
 
 import './main.less';
@@ -22,15 +23,17 @@ export class Main extends React.Component {
 
     constructor(props) {
         super(props);
+
+        console.log('props', props);
         moment.locale('zh-cn');
 
         let url = window.location.href.split('#');
-        let menukey = '/main/monitor';
+        let menukey = '/main/test';
         menukey = url.length > 1 ? url[1] : menukey;
 
         this.unsubscribe = Store.listen(this.onStatusChange.bind(this));
 
-        this.state = {hasNewMsg: false,verify:false, menukey:menukey};
+        this.state = { history:props.history, hasNewMsg: false,verify:false, menukey:menukey};
     }
 
     componentDidMount(){
@@ -45,8 +48,12 @@ export class Main extends React.Component {
             switch (type) {
                 case "verify":
                     if(data.code === 200){
-                        this.setState({verify:true})
+                        this.setState({verify:true});
+                        this.state.history.push("/main/test");
                     }
+                    break;
+                case "message":
+                    message[data.type](data.message);
                     break;
             }
         };

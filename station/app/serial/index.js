@@ -15,7 +15,7 @@ const {Sider, Content} = Layout;
 class Register extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {visible: props.showModal};
+        this.state = {verify:Store.verify,visible: props.showModal};
         this.unsubscribe = Store.listen(this.onStatusChange.bind(this));
 
         // 获取当前序列号
@@ -32,6 +32,11 @@ class Register extends React.Component {
 
     onStatusChange = (type, data) => {
         switch (type) {
+            case "verify":
+                if(data.code === 200){
+                    this.setState({verify:true})
+                }
+                break;
             case "serial":
                 this.setState({'serial': data});
                 break;
@@ -121,7 +126,7 @@ class Register extends React.Component {
 
                     <FormItem {...tailFormItemLayout}>
                         <Button type="primary"
-
+                                disabled={!this.state.verify}
                                 htmlType="submit">
                             注册
                         </Button>
