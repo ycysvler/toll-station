@@ -49,22 +49,36 @@ def load_config():
         json.dump(result,open(cfg_file,'w'), indent=4)
     return json.load(open(cfg_file,'r'))
 
+'''
+返回默认主页
+'''
 @app.route('/')
 def index():
     return render_template('index.html')
 
+'''
+停止某一个服务
+'''
 @app.route('/api/stop')
 def stop():
     name = request.args.get('name')
     os.system('pm2 stop ' + name)
     return jsonify({"code":200})
 
+'''
+重启某一个服务
+'''
 @app.route('/api/restart')
 def restart():
     name = request.args.get('name')
     os.system('pm2 restart ' + name)
     return jsonify({"code":200})
 
+'''
+# 更新模型
+  解压缩覆盖文件
+  重启pm2进程
+'''
 @app.route('/api/online')
 def change():
     path = request.args.get('path')
@@ -82,6 +96,9 @@ def change():
     json.dump(cfg,open(cfg_file,'w'), indent=4) 
     return jsonify({"code":200})
 
+'''
+从服务器下载模型
+'''
 @app.route('/api/download')
 def download():
     cfg = load_config()
@@ -94,6 +111,11 @@ def download():
     download_big_file_with_wget(cfg['center_base'] + '/models/' + filename,local_models_path + filename)
     return jsonify({"code":200, "filename":filename})
 
+'''
+# 注册服务
+  向服务器中心注册自己
+  在配置中记录服务器地址
+'''
 @app.route('/api/register', methods=['POST'])
 def register():
     data = str(request.data, encoding = "utf-8")
@@ -122,15 +144,12 @@ def register():
         return jsonify({"code":500,"message":"IP地址无法访问！"})
 
 
-
-
-
-
-
+'''
+查看服务器版本
+'''
 @app.route('/api/version')
 def versions():
     config = load_config()
-
     result = requests.get(config['center_base'] + '/api/version').json()
 
     for item in result['data']:
@@ -153,6 +172,9 @@ def versions():
     result['data'] = list
     return jsonify(result)
 
+'''
+验证是否已经注册
+'''
 def verify():
     global verifyed
     if verifyed:
