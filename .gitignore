@@ -1,4 +1,4 @@
 .idea/
 ./center/node_modules/
 ./station/node_modules/
-./station/server/static/
+./station/server/static
