@@ -1,3 +1,4 @@
 .idea/
-./center/server/public/
+./center/node_modules/
+./station/node_modules/
 ./station/server/static/
