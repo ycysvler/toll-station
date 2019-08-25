@@ -40,7 +40,7 @@ def run():
         getStationVersion(station['_id'], ip)
 
 def postImage(ip, port, type):
-    files = {"image":open("./"+type+".jpg", "rb")}
+    files = {"image":open("/root/toll-station/center/server/monitor/"+type+".jpg", "rb")}
     try:
         res = requests.post('http://'+ip+':' + port +'/upload',None,files=files)
     except Exception as e:
