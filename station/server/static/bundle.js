@@ -74712,6 +74712,7 @@ var Version = function (_React$Component) {
                         { href: 'javascript:;',
                             onClick: function onClick() {
                                 _this.setState({ loading: true });
+                                console.log('xxx', record);
                                 _reflux.Actions.download(record.filename);
                             }
                         },

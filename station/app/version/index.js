@@ -109,6 +109,7 @@ export default class Version extends React.Component {
                     {record.exist ? null:<a href="javascript:;"
                        onClick={() => {
                            this.setState({loading:true});
+                           console.log('xxx', record);
                            Actions.download(record.filename);
                        }}
                     >下载</a>}

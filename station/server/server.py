@@ -108,7 +108,10 @@ def download():
     if not os.path.exists(local_models_path):
         os.makedirs(local_models_path)
     # 下载文件
-    download_big_file_with_wget(cfg['center_base'] + '/models/' + filename,local_models_path + filename)
+    srcfile = cfg['center_base'] + '/models/' + filename
+    tarfile = local_models_path + filename
+    print(srcfile, tarfile)
+    download_big_file_with_wget(srcfile,tarfile)
     return jsonify({"code":200, "filename":filename})
 
 '''
