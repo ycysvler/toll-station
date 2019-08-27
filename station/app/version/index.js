@@ -109,7 +109,6 @@ export default class Version extends React.Component {
                     {record.exist ? null:<a href="javascript:;"
                        onClick={() => {
                            this.setState({loading:true});
-                           console.log('xxx', record);
                            Actions.download(record.filename);
                        }}
                     >下载</a>}
@@ -128,7 +127,7 @@ export default class Version extends React.Component {
                     {/*                                         }}*/}
                     {/*>Add</Button> {this.state.loading?<Spin  />:null} </div>*/}
 
-                    <Table bordered rowKey="_id" dataSource={this.state.list} columns={this.columns}/>
+                    <Table loading={this.state.loading} bordered rowKey="_id" dataSource={this.state.list} columns={this.columns}/>
 
                     <VersionInfo refresh={this.refresh} showModal={this.state.modal}/>
                 </Layout>

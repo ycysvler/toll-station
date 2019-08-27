@@ -63297,7 +63297,6 @@ var Main = exports.Main = function (_React$Component) {
                 case "verify":
                     if (data.code === 200) {
                         _this.setState({ verify: true });
-                        _this.state.history.push("/main/test");
                     }
                     break;
                 case "message":
@@ -74712,7 +74711,6 @@ var Version = function (_React$Component) {
                         { href: 'javascript:;',
                             onClick: function onClick() {
                                 _this.setState({ loading: true });
-                                console.log('xxx', record);
                                 _reflux.Actions.download(record.filename);
                             }
                         },
@@ -74763,7 +74761,7 @@ var Version = function (_React$Component) {
                 _react2.default.createElement(
                     _layout2.default,
                     { style: { padding: 16 } },
-                    _react2.default.createElement(_table2.default, { bordered: true, rowKey: '_id', dataSource: this.state.list, columns: this.columns }),
+                    _react2.default.createElement(_table2.default, { loading: this.state.loading, bordered: true, rowKey: '_id', dataSource: this.state.list, columns: this.columns }),
                     _react2.default.createElement(_info2.default, { refresh: this.refresh, showModal: this.state.modal })
                 )
             );

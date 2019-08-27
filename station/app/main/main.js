@@ -49,7 +49,6 @@ export class Main extends React.Component {
                 case "verify":
                     if(data.code === 200){
                         this.setState({verify:true});
-                        this.state.history.push("/main/test");
                     }
                     break;
                 case "message":
