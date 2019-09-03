@@ -46,7 +46,8 @@ export default class Monitor extends React.Component {
         dataIndex: 'ip',
         key: 'ip',
         render:(text, record)=>{
-            return <Link to={`/main/remote/${text}`}>{text}</Link>
+            // return <Link to={`/main/remote/${text}`}>{text}</Link>
+            return <a href={`http://${text}:4100/`} target={'_blank'}>{text}</a>
         }
     },{
         title:'车型模型版本',
